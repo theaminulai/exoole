@@ -1,0 +1,22 @@
+{
+	"name": "exoole",
+	"version": "0.1.0",
+	"description": "A custom WordPress plugin for exoole",
+	"license": "GPL-3.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --experimental-modules",
+		"start": "wp-scripts start --experimental-modules",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.4.0"
+	},
+	"dependencies": {
+		"@wordpress/interactivity": "^6.11.0"
+	}
+}

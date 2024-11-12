@@ -5,7 +5,7 @@ build-style
 build-types
 node_modules
 vendor
-gutenberg.zip
+exoole.zip
 coverage
 .phpunit.result.cache
 .reassure
@@ -14,11 +14,10 @@ coverage
 # Directories/files that may appear in your environment
 *.log
 yarn.lock
-results
-/artifacts
-/test/e2e/artifacts
+composer.lock
+composer.phar
+package-lock.json
 /perf-envs
-/composer.lock
 
 # The /.cache folder is needed for phpcs to cache results between runs, while other .cache folders must be ignored
 # It is not possible to re-include a file if a parent directory of that file is excluded
@@ -45,3 +44,16 @@ phpcs.xml
 phpunit.xml
 phpunit-watcher.yml
 .tool-versions
+
+
+# Optional npm cache directory
+.npm
+
+# Output of `npm pack`
+*.tgz
+
+# Output of `wp-scripts plugin-zip`
+*.zip
+
+# dotenv environment variables file
+.env
