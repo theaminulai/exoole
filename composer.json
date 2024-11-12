@@ -1,0 +1,35 @@
+{
+    "name": "exoole/exoole",
+    "description": "A custom WordPress plugin for exoole",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Exoole\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "theaminul"
+        },
+        {
+            "name": "im-azad"
+        }
+    ],
+    "require-dev": {
+        "phpcompatibility/phpcompatibility-wp": "^2.1.3",
+        "wp-coding-standards/wpcs": "^3.0",
+        "spatie/phpunit-watcher": "^1.23",
+        "gutenberg/gutenberg-coding-standards": "@dev"
+    },
+    "require": {
+        "composer/installers": "^1.0 || ^2.0"
+    },
+    "minimum-stability": "alpha",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
