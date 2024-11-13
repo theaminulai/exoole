@@ -1,2 +1,5 @@
 <?php
-// Silence is golden.
+/**
+ * @package Exoole
+ * Silence is golden.
+ */
