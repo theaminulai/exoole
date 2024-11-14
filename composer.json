@@ -9,6 +9,7 @@
 		"gutenberg",
 		"wordpress",
 		"editor",
+		"block",
 		"wp",
 		"react",
 		"javascript"
@@ -22,12 +23,8 @@
 	},
 	"authors": [
 		{
-			"name": "theaminul",
-			"email": "mdaminulislam2015bd@gmail.com"
-		},
-		{
-			"name": "im-azad",
-			"email": "im-azad@example.com"
+			"name": "Exoole",
+			"homepage": "https://github.com/theaminuli/exoole/graphs/contributors"
 		}
 	],
 	"autoload": {
@@ -35,20 +32,26 @@
 			"Exoole\\": "includes/"
 		}
 	},
-	"require-dev": {
-		"phpcompatibility/phpcompatibility-wp": "^2.1.3",
-		"wp-coding-standards/wpcs": "^3.0",
-		"squizlabs/php_codesniffer": "^3.6"
-	},
-	"require": {
-		"composer/installers": "^1.0 || ^2.0"
-	},
 	"minimum-stability": "alpha",
 	"prefer-stable": true,
 	"config": {
+		"process-timeout": 0,
+		"platform": {
+			"php": "7.4"
+		},
 		"allow-plugins": {
 			"composer/installers": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
+	},
+	"require": {
+		"composer/installers": "^1.0 || ^2.0"
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+		"squizlabs/php_codesniffer": "^3.5",
+		"phpcompatibility/phpcompatibility-wp": "^2.1.3",
+		"wp-coding-standards/wpcs": "^2.2",
+		"sirbrillig/phpcs-variable-analysis": "^2.8"
 	}
 }

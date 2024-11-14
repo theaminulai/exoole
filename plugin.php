@@ -35,7 +35,7 @@ class Plugin {
 	 * @static
 	 * @return Exoole_Plugin
 	 */
-	public static function exoole_instance() {
+	public static function instance() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 		}
@@ -52,7 +52,7 @@ class Plugin {
 	 * @return void
 	 */
 	private function exoole_register_autoload() {
-		require_once EXOOLE_DIR . '/autoload.php';
+		require_once EXOOLE_DIR . '\autoload.php';
 	}
 
 	/**
@@ -69,7 +69,18 @@ class Plugin {
 			new Tests\Init();
 		}
 	}
-
+	/**
+	 * Initialize assets for the plugin.
+	 * 
+	 * Loads all assets for the Exoole plugin.
+	 * 
+	 * @since 1.0.0
+	 * @access private
+	 * @return void
+	 */
+	private function exoole_init_assets() {
+		// Initialize Assets loader.
+	}
 	/**
 	 * Initialize REST API.
 	 *
@@ -97,6 +108,18 @@ class Plugin {
 	}
 
 	/**
+	 * Initialize Block Editor
+	 * 
+	 * Loads all blocks editor related functionality for the Exoole plugin.
+	 * 
+	 * @since 1.0.0
+	 * @access private
+	 * @return void
+	 */
+	private function exoole_init_block_editor() {
+		// Initialize Blocks loader.
+	}
+	/**
 	 * Initialize Blocks.
 	 *
 	 * Loads all block-related functionality for the Exoole plugin.
@@ -121,9 +144,11 @@ class Plugin {
 	private function exoole_init() {
 		$this->exoole_register_autoload();
 		$this->exoole_init_test();
+		$this->exoole_init_assets();
 		$this->exoole_init_rest_api();
 		$this->exoole_init_admin();
 		$this->exoole_init_blocks();
+		$this->exoole_init_block_editor();
 	}
 
 	/**
@@ -140,4 +165,4 @@ class Plugin {
 }
 
 // Instantiate the Exoole Plugin Class
-Plugin::exoole_instance();
+Plugin::instance();

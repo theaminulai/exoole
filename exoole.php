@@ -22,7 +22,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'EXOOLE_VERSION', '1.0.0' );
+if ( ! defined( 'EXOOLE_VERSION' ) ) {
+	$plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version' ) );
+	define( 'EXOOLE_VERSION', $plugin_data['Version'] );
+}
 define( 'EXOOLE_ENV', 'development' );
 define( 'EXOOLE_FILE', __FILE__ );
 define( 'EXOOLE_DIR', __DIR__ );
@@ -89,7 +92,7 @@ final class Exoole {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	public function exoole_admin_notice_fail_wp_version() {
+	private function exoole_admin_notice_fail_wp_version() {
 		$message = sprintf(
 			/* translators: %s: Minimum WordPress version required. */
 			esc_html__( 'Exoole requires WordPress version %s or higher. Please update WordPress.', 'exoole' ),
@@ -106,7 +109,7 @@ final class Exoole {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	public function exoole_admin_notice_fail_php_version() {
+	private function exoole_admin_notice_fail_php_version() {
 		$message = sprintf(
 			/* translators: %s: Minimum PHP version required. */
 			esc_html__( 'Exoole requires PHP version %s or higher. Please update your PHP version.', 'exoole' ),
