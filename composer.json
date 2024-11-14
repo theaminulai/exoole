@@ -16,7 +16,8 @@
 	],
 	"scripts": {
 		"format": "phpcbf --standard=./phpcs.xml --report-summary --report-source",
-		"lint": "phpcs --standard=./phpcs.xml"
+		"lint": "phpcs --standard=./phpcs.xml",
+		"zip": "composer archive --file=exoole"
 	},
 	"support": {
 		"issues": "https://github.com/theaminuli/exoole/issues"
@@ -35,6 +36,7 @@
 	"minimum-stability": "alpha",
 	"prefer-stable": true,
 	"config": {
+		"archive-format": "zip",
 		"process-timeout": 0,
 		"platform": {
 			"php": "7.4"
@@ -43,6 +45,14 @@
 			"composer/installers": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
+	},
+	"archive": {
+		"exclude": [
+			"/vendor",
+			"/node_modules",
+			"/tests",
+			"/scripts"
+		]
 	},
 	"require": {
 		"composer/installers": "^1.0 || ^2.0"

@@ -45,7 +45,6 @@ phpunit.xml
 phpunit-watcher.yml
 .tool-versions
 
-
 # Optional npm cache directory
 .npm
 

@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "exoole/example-dynamic",
+	"name": "exoole/todo",
 	"version": "0.1.0",
-	"title": "Example Dynamic",
+	"title": "Todo",
 	"category": "exoole",
 	"icon": "smiley",
 	"description": "Example block scaffolded with Create Block tool.",

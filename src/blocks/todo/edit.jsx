@@ -34,7 +34,7 @@ export default function Edit() {
 		<p { ...useBlockProps() }>
 			{ __(
 				'Example Dynamic – hello from the editor!',
-				'example-dynamic'
+				'exoole'
 			) }
 		</p>
 	);
