@@ -32,10 +32,7 @@ import './editor.scss';
 export default function Edit() {
 	return (
 		<p { ...useBlockProps() }>
-			{ __(
-				'Example Dynamic – hello from the editor!',
-				'exoole'
-			) }
+			{ __( 'Example Dynamic – hello from the editor!', 'exoole' ) }
 		</p>
 	);
 }

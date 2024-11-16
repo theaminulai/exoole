@@ -23,6 +23,7 @@ package-lock.json
 # It is not possible to re-include a file if a parent directory of that file is excluded
 # So, both /.cache and /.cache./.gitkeep must be re-included
 .cache
+.turbo
 !/.cache/
 /.cache/**
 !/.cache/.gitkeep

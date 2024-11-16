@@ -1,0 +1,8 @@
+.cache
+build
+build-module
+build-types
+node_modules
+# packages/react-native-editor/bundle
+vendor
+!.*.js

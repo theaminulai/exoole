@@ -1,0 +1,6 @@
+.cache
+build
+build-module
+build-types
+# packages/url/src/test/fixtures
+vendor
