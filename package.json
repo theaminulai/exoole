@@ -5,7 +5,6 @@
 	"description": "A custom WordPress plugin for exoole",
 	"license": "GPL-3.0-or-later",
 	"main": "build/index.js",
-	"type": "module",
 	"scripts": {
 		"build": "turbo build && wp-scripts build --experimental-modules",
 		"start": "turbo dev && wp-scripts start --experimental-modules",
