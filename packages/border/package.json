@@ -1,0 +1,18 @@
+{
+  "name": "@exoole/border",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    "./BorderBox": "./src/BorderBox.jsx",
+    "./ColorBox": "./src/ColorBox.jsx"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}

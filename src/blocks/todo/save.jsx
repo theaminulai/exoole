@@ -15,11 +15,14 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
+import BorderBox from '@exoole/border/BorderBox';
 export default function save() {
-	
 	return (
-		<p { ...useBlockProps.save() }>
-			{ 'todo – hello from the saved content!' }
-		</p>
+		<>
+			<BorderBox />
+			<p { ...useBlockProps.save() }>
+				{ 'todo – hello from the saved content!' }
+			</p>
+		</>
 	);
 }

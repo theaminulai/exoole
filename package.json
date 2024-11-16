@@ -6,8 +6,8 @@
 	"license": "GPL-3.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"build": "turbo build && wp-scripts build --experimental-modules",
-		"start": "turbo dev && wp-scripts start --experimental-modules",
+		"build": "turbo build && wp-scripts build",
+		"start": "turbo dev && wp-scripts start",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
@@ -23,6 +23,7 @@
 	},
 	"packageManager": "npm@10.5.0",
 	"devDependencies": {
+		"@exoole/border": "*",
 		"@wordpress/scripts": "^30.4.0",
 		"path": "^0.12.7",
 		"turbo": "^2.3.0",
