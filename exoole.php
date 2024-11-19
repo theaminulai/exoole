@@ -29,7 +29,7 @@ if ( ! defined( 'EXOOLE_VERSION' ) ) {
 define( 'EXOOLE_ENV', 'development' );
 define( 'EXOOLE_FILE', __FILE__ );
 define( 'EXOOLE_DIR', __DIR__ );
-define( 'EXOOLE_TEST', true );
+define( 'EXOOLE_TEST', false );
 define( 'EXOOLE_PATH', plugin_dir_path( EXOOLE_FILE ) );
 define( 'EXOOLE_URL', plugins_url( '/', EXOOLE_FILE ) );
 define( 'EXOOLE_MINIMUM_PHP_VERSION', '7.4' );

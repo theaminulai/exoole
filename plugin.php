@@ -70,6 +70,19 @@ class Plugin {
 		}
 	}
 	/**
+	 * Initialize REST API.
+	 *
+	 * Loads all REST API related functionality for the Exoole plugin.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @return void
+	 */
+	private function exoole_init_rest_api() {
+		new RestAPI\Endpoint();
+	}
+
+	/**
 	 * Initialize assets for the plugin.
 	 * 
 	 * Loads all assets for the Exoole plugin.
@@ -81,19 +94,6 @@ class Plugin {
 	private function exoole_init_assets() {
 		// Initialize Assets loader.
 	}
-	/**
-	 * Initialize REST API.
-	 *
-	 * Loads all REST API related functionality for the Exoole plugin.
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 * @return void
-	 */
-	private function exoole_init_rest_api() {
-		// Initialize REST API loader.
-	}
-
 	/**
 	 * Initialize Admin.
 	 *
@@ -129,7 +129,8 @@ class Plugin {
 	 * @return void
 	 */
 	private function exoole_init_blocks() {
-		// Initialize Blocks loader.
+		new Blocks\BlocksManager();
+		new Blocks\BlockLists();
 	}
 
 	/**
