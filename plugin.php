@@ -104,7 +104,7 @@ class Plugin {
 	 * @return void
 	 */
 	private function exoole_init_admin() {
-		// Initialize Admin loader.
+		new Admin\AdminMenu();
 	}
 
 	/**

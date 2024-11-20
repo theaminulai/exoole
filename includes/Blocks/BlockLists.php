@@ -38,7 +38,7 @@ class BlockLists {
 		// New blocks to register
 		$new_blocks = [
 			[
-				'_id'      =>  substr(uniqid(), -6),
+				'_id'      =>  uniqid(),
 				'slug'     => 'button',
 				'title'    => 'Button',
 				'package'  => 'free',
@@ -46,7 +46,7 @@ class BlockLists {
 				'status'   => true,
 			],
 			[
-				'_id'      => substr(uniqid(), -6),
+				'_id'      => uniqid(),
 				'slug'     => 'header',
 				'title'    => 'Header',
 				'package'  => 'premium',
@@ -54,7 +54,7 @@ class BlockLists {
 				'status'   => false,
 			],
 			[
-				'_id'      => substr(uniqid(), -6),
+				'_id'      => uniqid(),
 				'slug'     => 'footer',
 				'title'    => 'Footer',
 				'package'  => 'premium',
