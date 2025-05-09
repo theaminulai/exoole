@@ -20,7 +20,6 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-import BorderBox from '@exoole/border/BorderBox';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -31,9 +30,9 @@ import BorderBox from '@exoole/border/BorderBox';
  * @return {Element} Element to render.
  */
 export default function Edit() {
+	
 	return (
 		<>
-			<BorderBox />
 			<p { ...useBlockProps() }>
 				{ __( 'Example Dynamic – hello from the editor!', 'exoole' ) }
 			</p>

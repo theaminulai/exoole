@@ -13,111 +13,65 @@
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       exoole
  * Domain Path:       /languages
- *
- * @package Exoole
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
-// Define plugin constants.
-if ( ! defined( 'EXOOLE_VERSION' ) ) {
-	$plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version' ) );
-	define( 'EXOOLE_VERSION', $plugin_data['Version'] );
-}
-define( 'EXOOLE_ENV', 'development' );
+// Setup constants.
+$plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version' ) );
+define( 'EXOOLE_VERSION', $plugin_data['Version'] );
 define( 'EXOOLE_FILE', __FILE__ );
-define( 'EXOOLE_DIR', __DIR__ );
+define( 'EXOOLE_DIR', plugin_dir_path( __FILE__ ) );
+define( 'EXOOLE_URL', plugin_dir_url( __FILE__ ) );
+define( 'EXOOLE_ENV', 'development' );
 define( 'EXOOLE_TEST', false );
-define( 'EXOOLE_PATH', plugin_dir_path( EXOOLE_FILE ) );
-define( 'EXOOLE_URL', plugins_url( '/', EXOOLE_FILE ) );
 define( 'EXOOLE_MINIMUM_PHP_VERSION', '7.4' );
 define( 'EXOOLE_MINIMUM_WP_VERSION', '6.0' );
 
+
 /**
- * Main Exoole Class
- *
- * Handles initialization and compatibility checks for the Exoole plugin.
- *
- * @since 1.0.0
+ * Display admin notice for incompatible WordPress version.
  */
-final class Exoole {
-
-	/**
-	 * Exoole constructor.
-	 *
-	 * Initializes the plugin by loading the text domain and hooking into WordPress.
-	 *
-	 * @since 1.0.0
-	 */
-	public function __construct() {
-		// Load the text domain for localization.
-		load_plugin_textdomain( 'exoole', false, dirname( plugin_basename( EXOOLE_FILE ) ) . '/languages' );
-
-		// Initialize the plugin after WordPress loads.
-		add_action( 'plugins_loaded', array( $this, 'exoole_init' ) );
-	}
-
-	/**
-	 * Initialize the plugin
-	 *
-	 * Performs compatibility checks and loads the main plugin file.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public function exoole_init() {
-		// Check WordPress version.
-		if ( ! version_compare( get_bloginfo( 'version' ), EXOOLE_MINIMUM_WP_VERSION, '>=' ) ) {
-			add_action( 'admin_notices', array( $this, 'exoole_admin_notice_fail_wp_version' ) );
-			return;
-		}
-
-		// Check PHP version.
-		if ( ! version_compare( PHP_VERSION, EXOOLE_MINIMUM_PHP_VERSION, '>=' ) ) {
-			add_action( 'admin_notices', array( $this, 'exoole_admin_notice_fail_php_version' ) );
-			return;
-		}
-
-		// Load the main plugin logic.
-		require_once EXOOLE_DIR . '\plugin.php';
-	}
-
-	/**
-	 * Display admin notice for incompatible WordPress version.
-	 *
-	 * Alerts the user that their WordPress version is too low to run the plugin.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	private function exoole_admin_notice_fail_wp_version() {
-		$message = sprintf(
-			/* translators: %s: Minimum WordPress version required. */
-			esc_html__( 'Exoole requires WordPress version %s or higher. Please update WordPress.', 'exoole' ),
-			EXOOLE_MINIMUM_WP_VERSION
-		);
-		echo '<div class="error"><p>' . wp_kses_post( $message ) . '</p></div>';
-	}
-
-	/**
-	 * Display admin notice for incompatible PHP version.
-	 *
-	 * Alerts the user that their PHP version is too low to run the plugin.
-	 *
-	 * @since 1.0.0
-	 * @return void
-	 */
-	private function exoole_admin_notice_fail_php_version() {
-		$message = sprintf(
-			/* translators: %s: Minimum PHP version required. */
-			esc_html__( 'Exoole requires PHP version %s or higher. Please update your PHP version.', 'exoole' ),
-			EXOOLE_MINIMUM_PHP_VERSION
-		);
-		echo '<div class="error"><p>' . wp_kses_post( $message ) . '</p></div>';
-	}
+function exoole_notice_fail_wp_version() {
+	echo '<div class="error"><p>' . esc_html__(
+		'Exoole requires WordPress version ' . EXOOLE_MINIMUM_WP_VERSION . ' or higher. Please update WordPress.',
+		'exoole'
+	) . '</p></div>';
 }
 
-// Instantiate the plugin.
-new Exoole();
+/**
+ * Display admin notice for incompatible PHP version.
+ */
+function exoole_notice_fail_php_version() {
+	echo '<div class="error"><p>' . esc_html__(
+		'Exoole requires PHP version ' . EXOOLE_MINIMUM_PHP_VERSION . ' or higher. Please update PHP.',
+		'exoole'
+	) . '</p></div>';
+}
+
+/**
+ * Initialize the plugin.
+ */
+function exoole_init() {
+	load_plugin_textdomain( 'exoole', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+	// Version checks.
+	if ( version_compare( get_bloginfo( 'version' ), EXOOLE_MINIMUM_WP_VERSION, '<' ) ) {
+		add_action( 'admin_notices', 'exoole_notice_fail_wp_version' );
+		return;
+	}
+
+	if ( version_compare( PHP_VERSION, EXOOLE_MINIMUM_PHP_VERSION, '<' ) ) {
+		add_action( 'admin_notices', 'exoole_notice_fail_php_version' );
+		return;
+	}
+
+	// Load core plugin functionality.
+	require_once EXOOLE_DIR . 'includes/class-exoole-plugin.php';
+
+	$plugin = new Exoole_Plugin();
+	$plugin->run();
+}
+
+exoole_init();

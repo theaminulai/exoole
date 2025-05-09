@@ -2,34 +2,87 @@
 	"name": "exoole",
 	"version": "0.1.0",
 	"private": true,
-	"description": "A custom WordPress plugin for exoole",
+	"description": "Create a block-based plugin for WordPress.",
+	"author": "theaminul",
 	"license": "GPL-3.0-or-later",
-	"main": "build/index.js",
+	"keywords": [
+		"exoole",
+		"block"
+	],
+	"homepage": "https://wordpress.org/plugins/exoole/",
+	"repository": "git+https://github.com/theaminul/exoole.git",
+	"bugs": {
+		"url": "https://wordpress.org/support/plugin/exoole/"
+	},
+	"engines": {
+		"node": ">=20.10.0",
+		"npm": ">=10.2.3"
+	},
 	"scripts": {
-		"build": "turbo build && wp-scripts build",
-		"start": "turbo dev && wp-scripts start",
+		"build": "wp-scripts build",
+		"create-block": "node scripts/create-block.js",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
+		"lint:css:fix": "npm run lint:css -- --fix",
 		"lint:js": "wp-scripts lint-js",
+		"lint:js:fix": "npm run lint:js -- --fix",
+		"lint:php": "composer run-script lint",
+		"lint:php:fix": "composer run-script format",
+		"lint:md-docs": "wp-scripts lint-md-docs",
+		"lint:pkg-json": "wp-scripts lint-pkg-json",
+		"test:php": "npm run test:php:setup && wp-env run tests-wordpress --env-cwd='wp-content/plugins/exoole' composer run-script test",
+		"test:php:watch": "wp-env run cli --env-cwd='wp-content/plugins/exoole' composer run-script test:watch",
+		"test:php:setup": "wp-env start",
 		"packages-update": "wp-scripts packages-update",
-		"create-block": "node scripts/create-block.js",
-		"plugin-zip": "wp-scripts plugin-zip"
+		"start": "wp-scripts start",
+		"composer": "wp-env run cli --env-cwd=wp-content/plugins/exoole composer",
+		"update-version": "node update-version-and-changelog.js",
+		"prepare": "husky install",
+		"wp-env": "wp-env",
+		"test:unit": "wp-scripts test-unit-js --config test/unit/jest.config.js"
 	},
 	"workspaces": [
 		"packages/*"
 	],
-	"engines": {
-		"node": ">=18"
-	},
 	"packageManager": "npm@10.5.0",
 	"devDependencies": {
-		"@exoole/border": "*",
-		"@wordpress/scripts": "^30.4.0",
+		"@actions/core": "^1.10.0",
+		"@emotion/babel-plugin": "^11.12.0",
+		"@wordpress/scripts": "^30.16.0",
+		"babel-plugin-inline-json-import": "^0.3.2",
+		"eslint-plugin-unicorn": "^55.0.0",
+		"husky": "^9.1.5",
+		"lerna": "8.1.9",
+		"lint-staged": "^15.2.10",
 		"path": "^0.12.7",
-		"turbo": "^2.3.0",
+		"prettier": "npm:wp-prettier@3.0.3",
+		"simple-git": "^3.26.0",
 		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
-		"@wordpress/interactivity": "^6.11.0"
+		"@codemirror/lang-json": "^6.0.1",
+		"@uiw/react-codemirror": "^4.23.1",
+		"@wordpress/icons": "^10.23.0",
+		"@wordpress/interactivity": "^6.23.0"
+	},
+	"lint-staged": {
+		"*.{js,json,yml}": [
+			"wp-scripts format"
+		],
+		"*.js": [
+			"npm run lint:js"
+		],
+		"*.{css,scss}": [
+			"npm run lint:css"
+		],
+		"*.php": [
+			"npm run lint:php"
+		],
+		"*.md": [
+			"npm run lint:md-docs"
+		],
+		"package.json": [
+			"npm run lint:pkg-json"
+		]
 	}
 }

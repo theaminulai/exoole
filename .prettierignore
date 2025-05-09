@@ -1,6 +1,3 @@
-.cache
 build
-build-module
-build-types
-# packages/url/src/test/fixtures
+node_modules
 vendor

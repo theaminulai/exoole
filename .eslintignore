@@ -1,8 +1,4 @@
-.cache
-build
-build-module
-build-types
-node_modules
-# packages/react-native-editor/bundle
 vendor
-!.*.js
+node_modules
+build
+admin/js/lib
