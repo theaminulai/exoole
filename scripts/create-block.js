@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/**
+ * External dependencies
+ */
 const fs = require( 'fs' );
 const path = require( 'path' );
 
@@ -39,7 +43,7 @@ const blockJson = `{
 	"viewScriptModule": "file:./view.js"
 }`;
 
-const indexJs =`/**
+const indexJs = `/**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
@@ -160,7 +164,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 export default function save() {
 	return (
 		<p { ...useBlockProps.save() }>
-			{ '${blockName} – hello from the saved content!' }
+			{ '${ blockName } – hello from the saved content!' }
 		</p>
 	);
 }
@@ -172,9 +176,9 @@ const renderPhp = `<?php
  */
 ?>
 <p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Example Dynamic – hello from a ${blockName} block!', 'exoole' ); ?>
+	<?php esc_html_e( 'Example Dynamic – hello from a ${ blockName } block!', 'exoole' ); ?>
 </p>
-`
+`;
 
 const viewJs = `/**
  * Use this file for JavaScript code that you want to run in the front-end
@@ -188,18 +192,18 @@ const viewJs = `/**
  */
 
 /* eslint-disable no-console */
-console.log( 'Hello World! (from create-block-${blockName} block)' );
+console.log( 'Hello World! (from create-block-${ blockName } block)' );
 /* eslint-enable no-console */
-`
+`;
 
 // Create folder and files
 fs.mkdirSync( blockPath, { recursive: true } );
 fs.writeFileSync( path.join( blockPath, 'block.json' ), blockJson );
 fs.writeFileSync( path.join( blockPath, 'index.jsx' ), indexJs );
 fs.writeFileSync( path.join( blockPath, 'edit.jsx' ), editJs );
-fs.writeFileSync(path.join(blockPath, 'style.scss'), styleCss);
-fs.writeFileSync(path.join(blockPath, 'save.jsx'), saveJs);
-fs.writeFileSync(path.join(blockPath, 'editor.scss'), editorCss);
+fs.writeFileSync( path.join( blockPath, 'style.scss' ), styleCss );
+fs.writeFileSync( path.join( blockPath, 'save.jsx' ), saveJs );
+fs.writeFileSync( path.join( blockPath, 'editor.scss' ), editorCss );
 fs.writeFileSync( path.join( blockPath, 'view.js' ), viewJs );
 fs.writeFileSync( path.join( blockPath, 'render.php' ), renderPhp );
 

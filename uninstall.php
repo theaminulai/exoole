@@ -1,10 +1,11 @@
 <?php
 /**
+ * Uninstall script for Exoole plugin.
+ *
  * @package Exoole
- * Silence is golden.
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
-// If the plugin is uninstalled, delete the options
+// If the plugin is uninstalled, delete the options.

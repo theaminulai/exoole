@@ -10,5 +10,5 @@
  */
 
 /* eslint-disable no-console */
-console.log('Hello World! (from create-block-todo block)');
+console.log( 'Hello World! (from create-block-todo block)' );
 /* eslint-enable no-console */

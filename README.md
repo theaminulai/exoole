@@ -10,9 +10,9 @@ Exoole is a modern page builder for WordPress, with a primary focus on Gutenberg
 - **User-Friendly**: Simple and intuitive interface for users of all skill levels.
 
 ## Brand Colors - inspired by [Wordpress User Color Modern](https://make.wordpress.org/design/handbook/design-guide/foundations/colors/)
-- ![#33f078](https://via.placeholder.com/15/33f078/000000?text=+) `#33f078`
-- ![#1e1e1e](https://via.placeholder.com/15/1e1e1e/000000?text=+) `#1e1e1e`
-- ![#3858e9](https://via.placeholder.com/15/3858e9/000000?text=+) `#3858e9`
+- ![#33f078](https://fakeimg.pl/20x20/33f078/ffffff?text=+) `#33f078`
+- ![#1e1e1e](https://fakeimg.pl/20x20/1e1e1e/ffffff?text=+) `#1e1e1e`
+- ![#3858e9](https://fakeimg.pl/20x20/3858e9/ffffff?text=+) `#3858e9`
 
 ## Installation
 

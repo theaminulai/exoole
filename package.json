@@ -2,7 +2,7 @@
 	"name": "exoole",
 	"version": "0.1.0",
 	"private": true,
-	"description": "Create a block-based plugin for WordPress.",
+	"description": "Create a block-based page Builder Plugin for WordPress.",
 	"author": "theaminul",
 	"license": "GPL-3.0-or-later",
 	"keywords": [
@@ -20,26 +20,26 @@
 	},
 	"scripts": {
 		"build": "wp-scripts build",
-		"create-block": "node scripts/create-block.js",
-		"format": "wp-scripts format",
-		"lint:css": "wp-scripts lint-style",
-		"lint:css:fix": "npm run lint:css -- --fix",
-		"lint:js": "wp-scripts lint-js",
-		"lint:js:fix": "npm run lint:js -- --fix",
-		"lint:php": "composer run-script lint",
-		"lint:php:fix": "composer run-script format",
-		"lint:md-docs": "wp-scripts lint-md-docs",
-		"lint:pkg-json": "wp-scripts lint-pkg-json",
-		"test:php": "npm run test:php:setup && wp-env run tests-wordpress --env-cwd='wp-content/plugins/exoole' composer run-script test",
-		"test:php:watch": "wp-env run cli --env-cwd='wp-content/plugins/exoole' composer run-script test:watch",
-		"test:php:setup": "wp-env start",
-		"packages-update": "wp-scripts packages-update",
+		"build:production": "node scripts/build-production.js",
 		"start": "wp-scripts start",
-		"composer": "wp-env run cli --env-cwd=wp-content/plugins/exoole composer",
-		"update-version": "node update-version-and-changelog.js",
+		"start:hot": "wp-scripts start --hot",
+		"create-block": "node scripts/create-block.js",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:fix": "wp-scripts lint-js --fix && wp-scripts lint-style --fix",
+		"lint:md-docs": "wp-scripts lint-md-docs",
 		"prepare": "husky install",
 		"wp-env": "wp-env",
-		"test:unit": "wp-scripts test-unit-js --config test/unit/jest.config.js"
+		"make-pot": "wp i18n make-pot ./ languages/exoole.pot --domain=exoole",
+		"format": "wp-scripts format --path=src",
+		"lint:standard": "vendor\\bin\\phpcs --standard=phpcs.xml",
+		"lint:wpcs": "vendor\\bin\\phpcs --standard=phpcs.xml",
+		"lint:wpcs:fix": "vendor\\bin\\phpcbf --standard=phpcs.xml",
+		"lint:pkg-json": "wp-scripts lint-pkg-json",
+		"packages-update": "wp-scripts packages-update",
+		"update-version": "node update-version-and-changelog.js",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"zip": "concurrently \"wp-scripts build\" && composer archive --file=../dist/exoole"
 	},
 	"workspaces": [
 		"packages/*"
@@ -48,41 +48,27 @@
 	"devDependencies": {
 		"@actions/core": "^1.10.0",
 		"@emotion/babel-plugin": "^11.12.0",
-		"@wordpress/scripts": "^30.16.0",
+		"@wordpress/babel-plugin-makepot": "^6.29.0",
+		"@wordpress/i18n": "^6.2.0",
+		"@wordpress/scripts": "^30.22.0",
+		"archiver": "^7.0.1",
 		"babel-plugin-inline-json-import": "^0.3.2",
+		"concurrently": "^9.1.0",
 		"eslint-plugin-unicorn": "^55.0.0",
 		"husky": "^9.1.5",
 		"lerna": "8.1.9",
 		"lint-staged": "^15.2.10",
+		"npm-check-updates": "^16.14.20",
 		"path": "^0.12.7",
 		"prettier": "npm:wp-prettier@3.0.3",
-		"simple-git": "^3.26.0",
+		"simple-git": "^3.27.0",
 		"webpack-remove-empty-scripts": "^1.0.4"
 	},
 	"dependencies": {
 		"@codemirror/lang-json": "^6.0.1",
 		"@uiw/react-codemirror": "^4.23.1",
-		"@wordpress/icons": "^10.23.0",
-		"@wordpress/interactivity": "^6.23.0"
-	},
-	"lint-staged": {
-		"*.{js,json,yml}": [
-			"wp-scripts format"
-		],
-		"*.js": [
-			"npm run lint:js"
-		],
-		"*.{css,scss}": [
-			"npm run lint:css"
-		],
-		"*.php": [
-			"npm run lint:php"
-		],
-		"*.md": [
-			"npm run lint:md-docs"
-		],
-		"package.json": [
-			"npm run lint:pkg-json"
-		]
+		"@wordpress/icons": "^10.29.0",
+		"@wordpress/interactivity": "^6.29.0",
+		"react-icons": "^5.5.0"
 	}
 }

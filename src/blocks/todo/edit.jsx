@@ -3,6 +3,9 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,6 +22,9 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
+/**
+ * Internal dependencies
+ */
 import './editor.scss';
 
 /**
@@ -30,7 +36,6 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit() {
-	
 	return (
 		<>
 			<p { ...useBlockProps() }>

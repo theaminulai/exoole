@@ -3,10 +3,13 @@
 node_modules/
 vendor/
 .gitignore
-update-google-fonts-json-file.js
 update-version-and-changelog.js
 package.json
+dev-note/
+screenshot.png
 src/
+scripts/
+docs/
 test/
 .git
 .github
@@ -30,7 +33,6 @@ composer.json
 composer.lock
 package-lock.json
 webpack.config.js
-phpcs.xml.dist
-phpunit.xml.dist
+phpcs.xml
 tests/
 bin/
