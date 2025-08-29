@@ -32,8 +32,8 @@ build/
 
 # Ignore local override files
 .wp-env.override.json
-# package-lock.json
-# composer.lock
+package-lock.json
+composer.lock
 
 # phpunit
 *.result.*
