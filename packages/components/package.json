@@ -1,0 +1,32 @@
+{
+	"name": "@exoole/components",
+	"version": "1.0.0",
+	"description": "Exoole UI Components - Reusable React components for the Exoole page builder",
+	"author": "Exoole Team",
+	"license": "GPL-3.0-or-later",
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "build/index.js",
+	"module": "build-module/index.js",
+	"types": "build-types/index.d.ts",
+	"sideEffects": false,
+	"wpScript": true,
+	"dependencies": {
+		"@wordpress/element": "^6.29.0",
+		"@wordpress/primitives": "^4.29.0",
+		"@wordpress/icons": "^10.29.0",
+		"classnames": "^2.5.1"
+	},
+	"peerDependencies": {
+		"react": "^18.0.0"
+	},
+	"keywords": [
+		"exoole",
+		"wordpress",
+		"gutenberg",
+		"components",
+		"react",
+		"ui"
+	]
+}
