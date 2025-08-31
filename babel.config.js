@@ -6,7 +6,6 @@ module.exports = (api) => {
 		plugins: [
 			'@emotion/babel-plugin',
 			'babel-plugin-inline-json-import',
-			['@wordpress/babel-plugin-makepot', { output: 'languages/exoole.pot' }]
 		],
 	};
 };

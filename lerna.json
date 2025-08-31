@@ -1,0 +1,29 @@
+{
+	"$schema": "https://json.schemastore.org/lerna.json",
+	"version": "independent",
+	"npmClient": "npm",
+	"command": {
+		"publish": {
+			"conventionalCommits": true,
+			"message": "chore(release): publish packages",
+			"registry": "https://registry.npmjs.org/"
+		},
+		"bootstrap": {
+			"ignore": "component-*",
+			"npmClientArgs": ["--no-package-lock"]
+		},
+		"version": {
+			"allowBranch": "main",
+			"conventionalCommits": true
+		}
+	},
+	"packages": [
+		"packages/*"
+	],
+	"ignoreChanges": [
+		"**/CHANGELOG.md",
+		"**/{__mocks__,__tests__,test}/**"
+	],
+	"useWorkspaces": true,
+	"stream": true
+}

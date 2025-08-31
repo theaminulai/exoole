@@ -1,0 +1,113 @@
+{
+	/**
+	 * Exoole Plugin - Base TypeScript Configuration (Gutenberg-Style)
+	 * This matches Gutenberg's architecture where:
+	 * - tsconfig.base.json provides shared compiler options
+	 * - TypeScript is used for type checking and .d.ts generation
+	 * - Webpack (via @wordpress/scripts) handles the actual building
+	 * 
+	 * @author Exoole Team
+	 * @see https://github.com/WordPress/gutenberg/blob/trunk/tsconfig.base.json
+	 * @see https://github.com/WordPress/gutenberg/blob/trunk/packages/scripts/
+	 */
+	"$schema": "https://json.schemastore.org/tsconfig.json",
+	
+	"compilerOptions": {
+		/* Language and Environment - Gutenberg Aligned */
+		"target": "esnext",                          // Gutenberg uses esnext (webpack handles downleveling)
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],    // Include DOM types for WordPress admin environment
+		"jsx": "preserve",                           // Preserve JSX for webpack to handle
+		"allowJs": true,                             // Allow JavaScript files (Gutenberg compatibility)
+		"checkJs": true,                             // Enable type checking for JavaScript files
+		
+		/* Modules - Gutenberg Style */
+		"module": "esnext",                          // Use modern ES modules (webpack transforms)
+		"moduleResolution": "node",                  // Node.js-style module resolution
+		"allowSyntheticDefaultImports": true,        // Allow default imports from modules with no default export
+		"esModuleInterop": false,                    // Keep false for WordPress package compatibility
+		"resolveJsonModule": true,                   // Enable importing .json files
+		"isolatedModules": true,                     // Required for webpack and project references
+		
+		/* Emit - TypeScript for Types Only, Webpack for JavaScript */
+		"declaration": true,                         // Generate .d.ts declaration files
+		"declarationMap": true,                      // Generate source maps for declarations
+		"composite": true,                           // Enable project references
+		"emitDeclarationOnly": true,                 // ONLY emit .d.ts files (webpack handles .js)
+		
+		/* Interop Constraints */
+		"forceConsistentCasingInFileNames": true,    // Ensure correct casing in imports
+		"allowUmdGlobalAccess": true,                // Allow accessing UMD globals (WordPress globals)
+		
+		/* Type Checking - Gutenberg Strict Settings */
+		"strict": true,                              // Enable all strict type checking options
+		"noImplicitReturns": true,                   // Error when not all code paths return a value
+		"noFallthroughCasesInSwitch": true,          // Error on fallthrough cases in switch statements
+		
+		/* Completeness */
+		"skipDefaultLibCheck": true,                 // Skip type checking of default library declaration files
+		
+		/* WordPress & Package Type Definitions */
+		"typeRoots": [                               // Directories to search for type definitions
+			"./typings",                             // Custom WordPress/plugin type definitions
+			"./node_modules/@types"                  // Standard npm type definitions
+		],
+		"types": [],                                 // Empty array (Gutenberg pattern) - packages define their own
+		
+		/* Paths - Simple Package Resolution (No Variables) */
+		"rootDir": "src",                            // Source directory (relative to each package)
+		"declarationDir": "build-types",             // TypeScript declaration output (relative to each package)
+		"baseUrl": "./",                             // Base directory for resolving modules
+		"paths": {                                   // Path mapping for @exoole packages
+			"@exoole/components": ["packages/components/src"],
+			"@exoole/data": ["packages/data/src"],
+			"@exoole/utils": ["packages/utils/src"],
+			"@exoole/hooks": ["packages/hooks/src"],
+			"@exoole/icons": ["packages/icons/src"],
+			"@exoole/api": ["packages/api/src"],
+			"@exoole/editor": ["packages/editor/src"],
+		
+			"@exoole/src": ["src"] // plugin root src directory
+
+		}
+	},
+	
+	/* Files to Include - Simple Pattern (No Variables) */
+	"include": ["src/**/*"],                     // Include all files in src directory
+
+	/* Files to Exclude - Gutenberg Optimized */
+	"exclude": [
+		"node_modules",                              // Dependencies
+		"packages/*/build/**",                       // Individual package builds
+		"packages/*/build-*/**",                     // Package build variants
+		"packages/*/dist/**",                        // Package distribution files
+		"packages/*/node_modules/**",                // Package-specific node_modules
+		"build/**",                                  // Root build output
+		"build-*/**",                                // Root build variants
+		"dist/**",                                   // Root distribution files
+		"**/*.test.ts",                              // Test files
+		"**/*.test.tsx",                             // React test files
+		"**/*.spec.ts",                              // Spec files
+		"**/*.spec.tsx",                             // React spec files
+		"**/test/**",                                // Test directories
+		"**/tests/**",                               // Test directories
+		"coverage/**",                               // Coverage reports
+		"**/*.min.js",                               // Minified files
+		"languages/**",                              // Translation files
+		"vendor/**",                                 // PHP vendor directory
+		".wordpress-org/**",                         // WordPress.org assets
+		"**/*.config.js",                            // Config files
+		"**/*.config.ts"                             // TypeScript config files
+	],
+	
+	/* TypeScript Project References - Enable for monorepo builds */
+	"references": [
+		/* Exoole packages will be auto-discovered by TypeScript */
+		/* Each package should have its own tsconfig.json that extends this base */
+		/* Example structure:
+		{ "path": "./packages/blocks" },
+		{ "path": "./packages/components" },
+		{ "path": "./packages/data" },
+		{ "path": "./packages/utils" }
+		*/
+	]
+}
