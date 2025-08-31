@@ -1,4 +1,4 @@
-# 🚀 Exoole - The Future of WordPress Page Building
+# 🚀 Exoole - The Future of WordPress Page Builder
 
 <div align="center">
 
