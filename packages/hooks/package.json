@@ -1,0 +1,22 @@
+{
+	"name": "@exoole/hooks",
+	"version": "1.0.0",
+	"description": "Exoole Hooks Package",
+	"author": "Exoole Team",
+	"license": "GPL-3.0-or-later",
+	"publishConfig": {
+		"access": "public"
+	},
+	"main": "build/index.js",
+	"module": "build-module/index.js",
+	"types": "build-types/index.d.ts",
+	"sideEffects": false,
+	"wpScript": true,
+	"dependencies": {},
+	"keywords": [
+		"exoole",
+		"wordpress",
+		"gutenberg",
+		"hooks"
+	]
+}

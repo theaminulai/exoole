@@ -1,0 +1,16 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"declarationDir": "build-types"
+	},
+	"include": [
+		"src/**/*"
+	],
+	"exclude": [
+		"**/*.test.ts",
+		"**/*.test.tsx",
+		"**/*.story.ts",
+		"**/*.story.tsx"
+	]
+}
