@@ -5,6 +5,8 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { store as blocksStore } from '@wordpress/blocks';
+import { ReactElement } from 'react';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -13,15 +15,12 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
  *
- * @return {Element} Element to render.
+ * @return {ReactElement} Element to render.
  */
-
-export default function save() {
+export default function Save(): ReactElement {
 	return (
-		<>
-			<p { ...useBlockProps.save() }>
-				{ 'todo – hello from the saved content!' }
-			</p>
-		</>
+		<p {...useBlockProps.save()}>
+			{ 'todo – hello from the saved content!' }
+		</p>
 	);
 }

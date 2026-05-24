@@ -5,6 +5,9 @@
 	},
 	"rules": {
 		"@wordpress/dependency-group": "error",
+		// "@typescript-eslint/no-empty-interface": "off",
+		// "no-restricted-imports": "off",
+		// "@typescript-eslint/no-restricted-imports": "off",
 		"@wordpress/i18n-text-domain": [
 			"error",
 			{
@@ -15,11 +18,52 @@
 		"unicorn/no-abusive-eslint-disable": "error"
 	},
 	// "ignorePatterns": [ "src/lib" ],
-	"plugins": [ "unicorn" ]
-	// "overrides": [
-	// 	{
-	// 		"files": [ "**/test/**/*.js" ],
-	// 		"extends": [ "plugin:@wordpress/eslint-plugin/test-unit" ]
-	// 	}
-	// ]
+	"plugins": [
+		"unicorn"
+	],
+	"overrides": [
+		{
+			"files": [ "**/*.js", "**/*.jsx", "**/*.tsx" ],
+			"rules": {
+				"react/react-in-jsx-scope": "off"
+			}
+		}
+	],
+	"settings": {
+		"import/core-modules": [
+			"react",
+			"react-dom",
+			"@wordpress/element",
+			"@wordpress/blocks",
+			"@wordpress/block-editor",
+			"@wordpress/components",
+			"@wordpress/core-data",
+			"@wordpress/date",
+			"@wordpress/element",
+			"@wordpress/keycodes",
+			"@wordpress/media-utils",
+			"react-router",
+			"react-dom/client",
+			"@wordpress/i18n",
+			"@wordpress/icons",
+			"@wordpress/url",
+			"@wordpress/hooks",
+			"@wordpress/data",
+			"@wordpress/html-entities",
+			"@wordpress/plugins",
+			"@wordpress/notices",
+			"@wordpress/navigation",
+			"@wordpress/edit-post",
+			"@wordpress/customize-posts",
+			"@wordpress/editor",
+			"@wordpress/compose",
+			"@wordpress/rich-text",
+			"@wordpress/priority-queue",
+			"@wordpress/blob",
+			"@wordpress/viewport",
+			"@wordpress/auto-updates",
+			"@wordpress/tracks",
+			"@wordpress/url"
+		]
+	}
 }

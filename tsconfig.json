@@ -14,10 +14,10 @@
 	"$schema": "https://json.schemastore.org/tsconfig.json",
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-		"declaration": true,
-		"composite": true,
-		"declarationMap": false,
-		"emitDeclarationOnly": false,
+		// "declaration": true,
+		// "composite": true,
+		// "declarationMap": false,
+		// "emitDeclarationOnly": false,
 		// "outDir": "./dist"
 	},
 	"files": [],

@@ -58,5 +58,10 @@
 		"wp-cli/i18n-command": "^2.6",
 		"sirbrillig/phpcs-changed": "^2.11",
 		"phpcompatibility/phpcompatibility-wp": "^2.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Exoole\\": "includes/"
+		}
 	}
 }

@@ -49,9 +49,7 @@ graph TB
 ```
 exoole/
 │
-├── 🛠️ includes/                    # Shared build configurations
-│   ├── class-exoole-plugin.php      # Main plugin class
-│   ├── class-exoole-plugin-loader.php # Plugin loader class
+├── 🛠️ includes/                    # Shared build configurations PSR-4: Autoloader
 │   └── .....
 ├── exoole.php                   # Main plugin file
 │

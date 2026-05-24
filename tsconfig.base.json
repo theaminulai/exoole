@@ -19,9 +19,12 @@
 		"jsx": "preserve",                           // Preserve JSX for webpack to handle
 		"allowJs": true,                             // Allow JavaScript files (Gutenberg compatibility)
 		"checkJs": true,                             // Enable type checking for JavaScript files
+		"strictNullChecks": true,                   // Enable strict null checks
+		"noImplicitAny": false,
+		"skipLibCheck": true,
 		
 		/* Modules - Gutenberg Style */
-		"module": "esnext",                          // Use modern ES modules (webpack transforms)
+		"module": "esnext",                          // Use ESNext module syntax
 		"moduleResolution": "node",                  // Node.js-style module resolution
 		"allowSyntheticDefaultImports": true,        // Allow default imports from modules with no default export
 		"esModuleInterop": false,                    // Keep false for WordPress package compatibility
@@ -46,11 +49,13 @@
 		/* Completeness */
 		"skipDefaultLibCheck": true,                 // Skip type checking of default library declaration files
 		
+		
 		/* WordPress & Package Type Definitions */
 		"typeRoots": [                               // Directories to search for type definitions
 			"./typings",                             // Custom WordPress/plugin type definitions
 			"./node_modules/@types"                  // Standard npm type definitions
 		],
+		
 		"types": [],                                 // Empty array (Gutenberg pattern) - packages define their own
 		
 		/* Paths - Simple Package Resolution (No Variables) */

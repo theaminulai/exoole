@@ -1,3 +1,4 @@
+
 /**
  * Retrieves the translation of text.
  *
@@ -15,6 +16,7 @@ import { __ } from '@wordpress/i18n';
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { ReactElement } from 'react';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -33,14 +35,12 @@ import './editor.scss';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
  *
- * @return {Element} Element to render.
+ * @return {ReactElement} Element to render.
  */
-export default function Edit() {
+export default function Edit(): ReactElement {
 	return (
-		<>
-			<p { ...useBlockProps() }>
-				{ __( 'Example Dynamic – hello from the editor!', 'exoole' ) }
-			</p>
-		</>
+		<p {...useBlockProps()}>
+			{ __( 'Example Dynamic – hello from the editor!', 'exoole' ) }
+		</p>
 	);
 }

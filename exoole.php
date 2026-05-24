@@ -39,13 +39,6 @@ define( 'EXOOLE_ENV', 'production' );
 define( 'EXOOLE_MINIMUM_PHP_VERSION', '7.4' );
 define( 'EXOOLE_MINIMUM_WP_VERSION', '6.0' );
 
-// Determine environment and load appropriate autoloader.
-if ( file_exists( EXOOLE_DIRNAME_INC . 'class-exoole-autoload.php' ) ) {
-	// Development environment with Composer.
-	require_once EXOOLE_DIRNAME_INC . 'class-exoole-autoload.php';
-	Exoole_Autoloader::register();
-}
-
 
 /**
  * Display admin notice for incompatible WordPress version.
@@ -80,13 +73,32 @@ function exoole_notice_fail_php_version() {
 }
 
 /**
- * Initialize the plugin.
+ * Load core plugin files and initialize the main plugin class.
+ *
+ * @return void
+ */
+function exoole_plugins_loaded() {
+	// Prefer composer autoloader when available. Files may be absent during development.
+	if ( file_exists( EXOOLE_DIR . 'vendor/autoload.php' ) ) {
+		require_once EXOOLE_DIR . 'vendor/autoload.php';
+	}
+	if ( file_exists( EXOOLE_DIR . 'includes/Plugin.php' ) ) {
+		require_once EXOOLE_DIR . 'includes/Plugin.php';
+	}
+}
+
+/**
+ * Bootstrap the plugin.
+ *
+ * Sets up text domain, minimum requirement checks and registers the loader
+ * that will initialize plugin classes when plugins are loaded.
  *
  * @return void
  * @since 1.0.0
  */
-function exoole_init() {
+function exoole_bootstrap() {
 	load_plugin_textdomain( 'exoole', false, dirname( EXOOLE_BASENAME ) . '/languages' );
+
 	if ( version_compare( get_bloginfo( 'version' ), EXOOLE_MINIMUM_WP_VERSION, '<' ) ) {
 		add_action( 'admin_notices', 'exoole_notice_fail_wp_version' );
 		return;
@@ -97,16 +109,15 @@ function exoole_init() {
 		return;
 	}
 
-	// Load core plugin functionality.
-	require_once EXOOLE_DIR . 'includes/class-exoole-plugin.php';
-
-	$plugin = new \Exoole\Exoole_Plugin();
-	$plugin->run();
+	// Defer loading plugin classes until all plugins are loaded.
+	add_action( 'plugins_loaded', 'exoole_plugins_loaded' );
 }
+
 /**
  * Initialize the plugin.
  *
  * @return void
  * @since 1.0.0
  */
-exoole_init();
+// Run bootstrap.
+exoole_bootstrap();
