@@ -23,7 +23,11 @@
 	],
 	"overrides": [
 		{
-			"files": [ "**/*.js", "**/*.jsx", "**/*.tsx" ],
+			"files": [
+				"**/*.js",
+				"**/*.jsx",
+				"**/*.tsx"
+			],
 			"rules": {
 				"react/react-in-jsx-scope": "off"
 			}
