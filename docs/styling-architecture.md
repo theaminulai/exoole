@@ -1,152 +1,276 @@
-# 🎨 Exoole Styling Architecture
+# Atomic Editor — Styling Architecture
 
-## Overview
+## Decision
 
-Exoole is built with a **Tailwind CSS-first** approach, designed specifically for optimal performance and seamless WordPress Gutenberg integration. This document outlines our styling philosophy and the technical decisions behind our architecture.
+**Tailwind CSS is the only styling system in Atomic Editor — everywhere, without exception.**
 
-## 🚀 Why Tailwind CSS?
+No `.css` files. No `.scss` files. No CSS custom properties written by hand. No inline `style=""` attributes with hardcoded values. No CSS-in-JS. No separate stylesheet per block, per component, or per admin page.
 
-### Performance First
-- **Single CSS Bundle**: Total project footprint of only **255KB** of Tailwind CSS
-- **No Separate File Management**: Eliminates the need to maintain multiple CSS files
-- **Faster Loading Times**: No additional CSS requests or file dependencies
-- **5x Speed Improvement**: Compared to traditional CSS approaches
+One Tailwind config. One compiled CSS output file. Zero custom CSS.
 
-### WordPress Gutenberg Optimization
-- **Responsive Design Made Easy**: Designing responsive layouts for Gutenberg blocks can be frustrating and complex with traditional CSS
-- **Attribute-Based Styling**: Tailwind classes map perfectly to Gutenberg block attributes
-- **No CSS-JS Disconnect**: Styles are co-located with components, eliminating synchronization issues
-- **Dynamic Styling**: Easy to implement conditional styles based on block settings
+This applies to every surface in the project:
 
-### Developer Experience
-- **Utility-First Approach**: Write styles directly in your JSX/TSX components
-- **Consistent Design System**: Predefined spacing, colors, and typography scales
-- **Rapid Prototyping**: Build interfaces faster without context switching
-- **Maintainable Code**: No orphaned CSS or specificity conflicts
-
-## 📊 Performance Comparison
-
-| Approach | Bundle Size | File Management | Loading Speed | Gutenberg Integration |
-|----------|-------------|----------------|---------------|----------------------|
-| **Exoole (Tailwind)** | 255KB | Single file | ⚡ 10x faster | 🟢 Seamless |
-| Traditional CSS | 500KB+ | Multiple files | 🐌 Slower | 🔴 Complex |
-| Page Builders | 1MB+ | Thousands of lines CSS | 🐌 Very slow | 🔴 Problematic |
-| Traditional Assets | 1MB+ (PHP based Generated CSS) | Multiple files Build | 🐌 Slow | 🔴 Difficult |
-
-
-## 🏗️ Architecture Benefits
-
-### 1. **Simplified Development Workflow**
-```jsx
-// ✅ Tailwind approach - everything in one place
-function ExooleButton({ variant, size }) {
-  return (
-    <button className={`
-      px-4 py-2 rounded-lg font-medium transition-colors
-      ${variant === 'primary' ? 'bg-blue-600 text-white hover:bg-blue-700' : ''}
-      ${size === 'large' ? 'px-6 py-3 text-lg' : ''}
-    `}>
-      Click me
-    </button>
-  );
-}
-
-// ❌ Traditional approach - scattered files
-// component.jsx + styles.css + responsive.css + gutenberg.css
-```
-
-### 2. **Gutenberg Block Attributes Integration**
-```jsx
-// Seamlessly map block attributes to Tailwind classes
-const blockClasses = `
-  ${attributes.alignment === 'center' ? 'text-center' : ''}
-  ${attributes.spacing === 'large' ? 'p-8' : 'p-4'}
-  ${attributes.responsive === 'mobile' ? 'md:hidden' : ''}
-`;
-```
-
-### 3. **No CSS File Management Overhead**
-- No need to create separate `.css` files for each component
-- No import/export of CSS modules
-- No CSS build pipeline complexity
-- No CSS purging configuration needed
-
-## 🎯 Design Philosophy
-
-### Consistency Through Constraints
-Tailwind's design tokens ensure consistent spacing, typography, and colors (dark and light) across the entire project:
-
-```css
-/* Spacing Scale */
-.p-4    /* 1rem (16px) */
-.p-6    /* 1.5rem (24px) */
-.p-8    /* 2rem (32px) */
-
-/* Typography Scale */
-.text-sm    /* 14px */
-.text-base  /* 16px */
-.text-lg    /* 18px */
-```
-
-### Responsive by Default
-Every Tailwind utility can be made responsive with simple prefixes:
-
-```jsx
-<div className="text-sm md:text-base lg:text-lg xl:text-xl">
-  Responsive text that scales beautifully
-</div>
-```
-
-## 🔧 Implementation Strategy
-
-### 1. **Component-Scoped Styling**
-Each Exoole component contains its own Tailwind classes, eliminating global CSS conflicts.
-
-### 2. **Attribute-Driven Design**
-Block attributes directly control Tailwind classes, making the editor experience intuitive.
-
-### 3. **Performance Optimization**
-Tailwind's JIT (Just-In-Time) compilation ensures only used classes are included in the final bundle.
-
-## 🌟 Benefits for End Users
-
-### Site Performance
-- **Faster Page Loads**: Smaller CSS bundle means quicker initial page rendering
-- **Better Core Web Vitals**: Reduced CSS blocking time improves LCP and CLS scores
-- **Mobile Optimization**: Responsive design without media query bloat
-
-### Editor Experience
-- **Real-time Styling**: Changes in the Gutenberg editor reflect immediately
-- **Consistent Spacing**: Uniform spacing system across all blocks
-- **Professional Layouts**: Easy to achieve complex responsive designs
-
-## 📈 Comparison with Other Solutions
-
-### Traditional Page Builders
-Page builders often generate thousands of lines of CSS dynamically, leading to:
-- Bloated stylesheets (1MB+)
-- Inline styles pollution
-- Poor performance scores
-- Difficult maintenance
-
-### Exoole's Approach
-- **255KB total CSS**: Significantly smaller footprint
-- **Zero inline styles**: Clean HTML output
-- **Excellent performance**: Optimized for Core Web Vitals
-- **Easy maintenance**: Single styling system
-
-## 🎉 Conclusion
-
-Exoole's Tailwind CSS architecture represents a modern, performance-first approach to WordPress block development. By eliminating separate CSS files and embracing utility-first styling, we achieve:
-
-- ⚡ **Superior Performance**: 5x faster than traditional approaches
-- 🎯 **Better Developer Experience**: No context switching between files
-- 🔧 **Seamless Gutenberg Integration**: Attributes map directly to styles
-- 📱 **Responsive by Default**: Mobile-first design made simple
-- 🚀 **Future-Proof**: Scalable architecture for growing projects
-
-This approach ensures that Exoole blocks not only look great but also perform exceptionally well, providing the best possible experience for both developers and end users.
+| Surface | Tailwind? |
+|---|---|
+| Block `edit.tsx` — editor canvas | ✅ |
+| Block `save.tsx` — frontend output | ✅ |
+| `packages/components/` — React UI | ✅ |
+| `src/admin/` — editor shell + inspector | ✅ |
+| WordPress admin pages (PHP templates) | ✅ |
+| Settings and onboarding screens | ✅ |
 
 ---
 
-*Built with ❤️ by the Exoole team*
+## Why Tailwind everywhere
+
+### Performance — 255KB → under 20KB
+
+Traditional page builders ship 1MB+ of CSS by maintaining separate stylesheets for every component. Exoole's original architecture targeted 255KB. With Tailwind JIT, Atomic Editor targets **under 20KB** — because JIT only emits the exact classes used in source files. A page with a Section and a Heading block ships only the CSS those two blocks need.
+
+### No CSS-JS disconnect
+
+Block attributes control visual output. With Tailwind, attribute values map directly to class names — no intermediate CSS variable layer, no separate stylesheet to keep in sync, no risk of a class existing in the CSS but the component forgetting to use it:
+
+```tsx
+// ✅ Tailwind — attribute drives class, one place, zero disconnect
+const blockClasses = cn(
+  attributes.alignment === 'center' && 'text-center',
+  attributes.spacing   === 'large'  && 'py-16 px-12',
+  attributes.hidden?.mobile         && 'md:block hidden',
+);
+```
+
+### One system across all developers
+
+Whether building a block, an inspector panel, or a PHP settings page — every developer writes the same way. No context switching between utility classes and BEM. No wondering which file owns the styles for a component.
+
+### Responsive by default
+
+Tailwind breakpoint prefixes work everywhere — in `save.tsx` output, in `edit.tsx` preview, in admin UI:
+
+```tsx
+<div className="text-sm md:text-base lg:text-lg xl:text-xl">
+  Responsive text in both the editor and the frontend
+</div>
+```
+
+---
+
+## Configuration
+
+A single `tailwind.config.ts` at the repo root covers all surfaces:
+
+```ts
+import type { Config } from 'tailwindcss';
+
+export default {
+  content: [
+    './packages/*/src/**/*.{ts,tsx}',
+    './src/blocks/**/*.{ts,tsx}',
+    './src/admin/**/*.{ts,tsx}',
+    './routes/**/*.{ts,tsx}',
+    './includes/**/*.php',
+    './templates/**/*.php',
+    './atomic-editor.php',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+        sans:    ['"DM Sans"', 'sans-serif'],
+        mono:    ['"DM Mono"', 'monospace'],
+      },
+      colors: {
+        'ae-blue':   '#3858e9',
+        'ae-bluem':  '#2d47d4',
+        'ae-bluel':  '#eef0fd',
+        'ae-green':  '#33f078',
+        'ae-greenm': '#1db857',
+        'ae-greenl': '#e8fdf0',
+        'ae-dark':   '#0d0d10',
+        'ae-dark2':  '#13131a',
+        'ae-dark3':  '#1a1a24',
+        'ae-dark4':  '#22222f',
+        'ae-dark5':  '#2a2a3a',
+        'ae-dim':    '#9ca3af',
+        'ae-subtle': '#c4c8d8',
+      },
+      borderRadius: {
+        'ae':    '10px',
+        'ae-lg': '14px',
+        'ae-xl': '18px',
+      },
+    },
+  },
+  plugins: [],
+} satisfies Config;
+```
+
+---
+
+## How blocks use Tailwind
+
+### Attribute-driven class maps
+
+Because Tailwind JIT scans source files statically, never build class names via string interpolation. Use lookup maps — every possible class string appears complete in source so JIT can see it:
+
+```ts
+// packages/utils/src/class-maps.ts
+
+export const paddingMap: Record<string, string> = {
+  none: 'py-0 px-0',
+  xs:   'py-4 px-4',
+  sm:   'py-8 px-6',
+  md:   'py-16 px-12',
+  lg:   'py-24 px-16',
+  xl:   'py-32 px-20',
+};
+
+export const backgroundMap: Record<string, string> = {
+  white:    'bg-white text-ae-dark',
+  light:    'bg-gray-50 text-ae-dark',
+  dark:     'bg-ae-dark text-white',
+  blue:     'bg-ae-blue text-white',
+  green:    'bg-ae-greenl text-ae-dark',
+  gradient: 'bg-gradient-to-br from-ae-bluel to-ae-greenl text-ae-dark',
+};
+
+export const alignMap: Record<string, string> = {
+  left:   'text-left',
+  center: 'text-center',
+  right:  'text-right',
+};
+```
+
+### `edit.tsx` — editor canvas
+
+```tsx
+import { cn, paddingMap, backgroundMap } from '@atomic-editor/utils';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+
+export function Edit( { attributes, setAttributes } ) {
+  const { padding, background, align, tagName: Tag = 'section' } = attributes;
+
+  return (
+    <Tag { ...useBlockProps({
+      className: cn(
+        'ae-section w-full',
+        paddingMap[ padding ],
+        backgroundMap[ background ],
+        align === 'center' && 'text-center',
+      )
+    })}>
+      <InnerBlocks />
+    </Tag>
+  );
+}
+```
+
+### `save.tsx` — frontend output
+
+Identical Tailwind logic. What visitors see matches the editor preview by default:
+
+```tsx
+import { cn, paddingMap, backgroundMap } from '@atomic-editor/utils';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+
+export function Save( { attributes } ) {
+  const { padding, background, align, tagName: Tag = 'section' } = attributes;
+
+  return (
+    <Tag { ...useBlockProps.save({
+      className: cn(
+        'ae-section w-full',
+        paddingMap[ padding ],
+        backgroundMap[ background ],
+        align === 'center' && 'text-center',
+      )
+    })}>
+      <InnerBlocks.Content />
+    </Tag>
+  );
+}
+```
+
+### PHP admin templates
+
+Tailwind classes go directly into PHP strings. The same compiled CSS covers them:
+
+```php
+// ✅ Tailwind in PHP — same system, same output file
+echo '<div class="min-h-screen bg-ae-dark2 font-sans text-white">';
+echo '  <nav class="flex items-center h-11 px-4 border-b border-ae-dark5 bg-ae-dark">';
+echo '    <span class="font-display font-bold text-sm text-white">Atomic Editor</span>';
+echo '  </nav>';
+echo '</div>';
+```
+
+---
+
+## `cn()` utility
+
+All class composition uses `cn()` from `@atomic-editor/utils`, which wraps `clsx` + `tailwind-merge`:
+
+```ts
+// packages/utils/src/cn.ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn( ...inputs: ClassValue[] ) {
+  return twMerge( clsx( inputs ) );
+}
+```
+
+`tailwind-merge` resolves conflicting utilities correctly — e.g. `py-4 py-8` → `py-8`. This is essential when composing classes from block attributes, component defaults, and conditional logic.
+
+---
+
+## Frontend delivery
+
+Tailwind compiles to a single `build/atomic-editor.css` file at build time. WordPress enqueues it once per page via `class-assets.php`. Because JIT only includes used classes, this file stays small regardless of how many blocks the plugin ships.
+
+There is no per-block stylesheet. No runtime CSS injection. No `<style>` tag written to the DOM by JavaScript. Everything is compiled ahead of time.
+
+---
+
+## `theme.json` — tokens for WordPress integration
+
+`theme.json` registers Atomic Editor's color palette and spacing scale with WordPress global styles. The values match `tailwind.config.ts` exactly, making them available in the FSE global styles panel and the core color picker:
+
+```json
+{
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "ae-blue",  "color": "#3858e9", "name": "AE Blue"  },
+        { "slug": "ae-green", "color": "#33f078", "name": "AE Green" },
+        { "slug": "ae-dark",  "color": "#0d0d10", "name": "AE Dark"  }
+      ]
+    }
+  }
+}
+```
+
+`theme.json` registers tokens. Tailwind renders them. They are never in conflict.
+
+---
+
+## Performance comparison
+
+| Approach | Bundle Size | File Management | Loading Speed | Gutenberg Integration |
+|---|---|---|---|---|
+| **Atomic Editor (Tailwind JIT)** | **< 20KB** | Single compiled file | ⚡ Fastest | ✅ Seamless |
+| Previous Exoole target (Tailwind) | 255KB | Single file | ⚡ Fast | ✅ Seamless |
+| Traditional CSS | 500KB+ | Multiple files | 🐌 Slower | ⚠️ Complex |
+| Elementor / Divi | 1MB+ | Thousands of lines | 🐌 Very slow | ❌ Parallel DOM |
+
+---
+
+## Rules — non-negotiable
+
+1. **No custom CSS anywhere.** No `.css`, no `.scss`, no `<style>` in PHP, no `style=""` with hardcoded values in JSX.
+2. **No CSS custom properties written by hand.** `theme.json` tokens are the only exception — WordPress generates those automatically.
+3. **No dynamic class name construction.** Never `\`py-${value}\``. Use lookup maps so JIT sees every class at build time.
+4. **`cn()` for all class composition.** Never manually concatenate class strings.
+5. **Same classes in `edit.tsx` and `save.tsx`.** The editor and frontend output are identical by default.
+6. **Lint enforces the rule.** A lint step rejects any `.css` or `.scss` file committed to the repository.

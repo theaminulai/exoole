@@ -1,216 +1,313 @@
-# 🏛️ Exoole Project Architecture
+# Atomic Editor — Project Architecture
 
 ## Overview
 
-**Exoole** is a modern, performance-first **WordPress Page Builder** built with cutting-edge technologies. Unlike traditional page builders that generate bloated code and poor performance, Exoole leverages **React**, **TypeScript**, **Tailwind CSS**, and **WordPress Gutenberg** to create fast, maintainable, and SEO-friendly websites.
+Atomic Editor is a next-generation, performance-first WordPress page builder built natively on Gutenberg. Unlike traditional page builders that generate bloated code, Atomic Editor leverages React 18, TypeScript, Tailwind CSS, and the WordPress block system to create fast, maintainable, and SEO-friendly pages.
 
-## 🎯 Project Vision
+**Stack:** React 18 · TypeScript · Tailwind CSS · WordPress Gutenberg · `@wordpress/build` · `@wordpress/scripts` · PHP 7.4+
 
-### What is Exoole?
-
-Exoole is a **next-generation WordPress page builder** that bridges the gap between design flexibility and performance optimization. It provides:
-
-- 🚀 **Lightning-fast Performance**: 255KB total CSS footprint vs 1MB+ in traditional builders
-- 🎨 **Professional Design System**: Built-in components with consistent styling
-- 📱 **Mobile-first Responsive**: Seamless responsive design without complexity
-- 🔧 **Developer-friendly**: Modern development stack with TypeScript and React
-- 🎛️ **User-friendly Interface**: Intuitive Gutenberg-based editing experience
-
-## 🏗️ High-Level Architecture
-
-```mermaid
-graph TB
-    A[WordPress Frontend] --> B[Exoole Page Builder]
-    B --> C[Gutenberg Editor Integration]
-    B --> D[Component Library]
-    B --> E[Block System]
-    
-    C --> F[Block Editor]
-    C --> G[Attribute Management]
-    C --> H[Preview System]
-    
-    D --> I[React Components]
-    D --> J[Custom Hooks]
-    D --> K[Utility Functions]
-    
-    E --> L[Layout Blocks]
-    E --> M[Content Blocks]
-    E --> N[Media Blocks]
-    E --> O[Form Blocks]
-    
-    P[Tailwind CSS] --> Q[Performance Layer]
-    Q --> R[255KB CSS Bundle]
-    Q --> S[JIT Compilation]
-    Q --> T[Tree Shaking]
-```
-
-## 📁 Project Structure
-
-```
-exoole/
-│
-├── 🛠️ includes/                    # Shared build configurations PSR-4: Autoloader
-│   └── .....
-├── exoole.php                   # Main plugin file
-│
-├── 📦 packages/                    # Monorepo Packages
-│   ├── components/                 # Reusable UI components
-│   ├── hooks/                      # Custom React hooks
-│   ├── utils/                      # Shared utilities
-│   └── types/                      # TypeScript definitions
-│   └── ...                     # Other packages
-│
-├── 🎨 src/                      # Exoole blocks
-│	├── 🎨 blocks/                      # Page Builder Blocks`
-│	│   ├── layout/ (Block Categories)                    # Layout building blocks
-│	│   │   ├── section/          # Full-width sections
-│	│   │   ├── grid/          # Feature showcase grids
-│	│   │   ├── div/          # Generic container
-│	│   │   ├── flexbox/        # Flexbox layouts
-│	│   │   ├── container/        # Responsive containers
-│	│   │   └── column/          # Column layouts
-│	│   │
-│	│   ├── content/ (Block Categories)                    # Content blocks
-│	│   │   ├── rich-text/             # Advanced text editor
-│	│   │   ├── heading/               # Styled headings
-│	│   │   ├── paragraph/             # Text paragraphs
-│	│   │   ├── list/                  # Styled lists
-│	│   │   └── quote/                 # Blockquotes
-│	│   │   └── ...                     # Other content blocks
-│	│   │
-│	│   ├── media/ (Block Categories)                   # Media blocks
-│	│   │   ├── image-gallery/         # Image galleries
-│	│   │   ├── video-player/          # Video embeds
-│	│   │   ├── slider/                # Image/content sliders
-│	│   │   └── background-section/    # Background images/videos
-│	│   │   └── ...                     # Other media blocks
-│	│   │
-│	│   └── interactive/ (Block Categories)                # Interactive blocks
-│	│   |    ├── contact-form/          # Contact forms
-│	│   |    ├── search-bar/            # Search functionality
-│	│   |    ├── social-share/          # Social sharing
-│	│   |    └── newsletter/            # Email signup
-│	│   |    └── ...                     # Other interactive blocks
-│   ├── admin/
-│   │   ├── sidebar/
-│   │   ├── settings/
-│   │   └── ...
-│   └── ...
-│
-├── 🛠️ tools/                       # Development tools
-│   ├── webpack-packages.js         # Auto-discovery utilities
-│   └── scripts/
-│
-├── 📚 docs/                        # Documentation
-│   ├── monorepo-architecture.md
-│   ├── exoole-style.md
-│   └── ...
-├── tests/                       # Unit and integration tests
-│   └── ...
-└── 📋 package.json                 # Root package.json
-├── webpack.config.js           # Webpack configuration
-├── update-version-and-changelog.js # Versioning and changelog script
-├── phpcs.xml                   # PHP CodeSniffer configuration
-├── lerna.json                  # Lerna configuration
-├── composer.json                # Composer configuration
-├── tsconfig.base.json          # Base TypeScript configuration
-└── tsconfig.json                   # TypeScript configuration
-```
-
-## 🧱 Block Architecture
-
-### Block Categories
-**Layout Blocks** - Foundation of Page Building
-**Content Blocks** - Rich Content Creation
-**Media Blocks** - Visual Content
-**Interactive Blocks** - User Engagement
-
-## 🎨 Design System Architecture
-Exoole is built with a **Tailwind CSS-first** approach, designed specifically for optimal performance and seamless WordPress Gutenberg integration. This document outlines our styling philosophy and the technical decisions behind our architecture.
-
-## 🔧 Technical Stack
-
-### Frontend Technologies
-
-| Technology | Purpose | Benefits |
-|------------|---------|----------|
-| **React 18** | Component framework | Virtual DOM, Hooks, Concurrent features |
-| **TypeScript** | Type safety | Better DX, fewer bugs, IntelliSense |
-| **Tailwind CSS** | Styling framework | 255KB bundle, utility-first, responsive, attributes management |
-| **WordPress Gutenberg** | Block editor | Native WP integration, familiar UX |
-
-### Build Tools
-
-| Tool | Purpose | Configuration |
-|------|---------|---------------|
-| **Webpack 5** | Module bundler | Tree shaking, code splitting |
-| **Babel** | JavaScript compiler | ES6+ to ES5 transpilation |
-| **PostCSS** | CSS processing | Autoprefixer, optimization |
-| **ESLint** | Code linting | Code quality enforcement |
-
-## 🚀 Performance Architecture
-### Performance Metrics
-
-| Metric | Target | Current | Traditional Builders |
-|--------|--------|---------|---------------------|
-| **CSS Bundle Size** | <300KB | 255KB | 1MB+ |
-| **JavaScript Bundle** | <500KB | 420KB | 800KB+ |
-| **First Contentful Paint** | <1.5s | 1.2s | 3s+ |
-| **Largest Contentful Paint** | <2.5s | 2.1s | 4s+ |
-| **Cumulative Layout Shift** | <0.1 | 0.05 | 0.3+ |
-
-## 🔮 Future Roadmap
-
-### Phase 1: Core Foundation (Current)
-- ✅ Basic block system
-- ✅ Tailwind CSS integration
-- ✅ Monorepo architecture
-- ✅ Performance optimization
-
-### Phase 2: Enhanced Page Building
-- 🔄 Advanced layout blocks
-- 🔄 Template system
-- 🔄 Global styles management
-- 🔄 Import/export functionality
-
-### Phase 3: Pro Features
-- 📋 Advanced animations
-- 📋 Dynamic content integration
-- 📋 E-commerce blocks (Maybe Pro feature)
-- 📋 Multi-site management
-
-### Phase 4: Ecosystem Expansion
-- 📋 Third-party integrations
-- 📋 Marketplace for templates
-- 📋 Developer API
-- 📋 White-label solutions
-
-## 🎯 Competitive Advantages
-
-### vs. Traditional Page Builders
-
-| Feature | Exoole | Elementor | Divi | Beaver Builder |
-|---------|--------|-----------|------|----------------|
-| **Bundle Size** | 255KB | 1MB+ | 1.5MB+ | 800KB+ |
-| **Loading Speed** | ⚡ Fast | 🐌 Slow | 🐌 Very Slow | 🐌 Slow |
-| **Code Quality** | ✅ Clean | ❌ Bloated | ❌ Inline styles | ⚠️ Mixed |
-| **Mobile Performance** | ✅ Excellent | ⚠️ Average | ❌ Poor | ⚠️ Average |
-| **Developer Experience** | ✅ Modern | ❌ Legacy | ❌ Proprietary | ⚠️ Limited |
-| **SEO Performance** | ✅ Optimized | ⚠️ Average | ❌ Poor | ⚠️ Average |
-
-## 🎉 Conclusion
-
-Exoole represents a **paradigm shift** in WordPress page building, combining:
-
-- 🚀 **Modern Development Stack**: React, TypeScript, and Tailwind CSS
-- ⚡ **Performance First**: 255KB total footprint vs 1MB+ competitors
-- 🎨 **Design System Approach**: Consistent, professional components
-- 🔧 **Developer Friendly**: Clean code, extensible architecture
-- 📱 **Mobile Optimized**: Responsive design without complexity
-- 🎯 **User Focused**: Intuitive Gutenberg-based editing experience
-
-This architecture ensures that Exoole not only competes with existing page builders but sets a new standard for performance, code quality, and user experience in the WordPress ecosystem.
+Tailwind CSS is the single styling system across every surface — block editor, block frontend output, admin pages, settings screens, and PHP templates. There are no CSS files anywhere in this project.
 
 ---
 
-*Building the future of WordPress page builders, one block at a time* 🚀
+## Project Vision
+
+Atomic Editor bridges the gap between design flexibility and performance. It provides:
+
+- **Lightning-fast performance** — Tailwind JIT under 20KB total CSS vs 1MB+ in traditional builders
+- **Native block output** — clean WordPress block markup, portable forever
+- **Zero frontend JS** for static blocks — interactive blocks use `@wordpress/interactivity` only
+- **Professional design system** — Plus Jakarta Sans, DM Sans, brand tokens in `theme.json`
+- **Developer-friendly** — modern stack, no custom CSS, one styling system everywhere
+- **User-friendly** — modern canvas UI, draggable navigator, inline editing
+
+---
+
+## High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      WordPress Admin                         │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │                 Atomic Editor Shell                   │  │
+│  │  ┌────────────┐  ┌─────────────────┐  ┌───────────┐  │  │
+│  │  │  Sidebar   │  │     Canvas      │  │ Inspector │  │  │
+│  │  │ (Tailwind) │  │ (@wp/block-ed.) │  │ (Tailwind)│  │  │
+│  │  └────────────┘  └─────────────────┘  └───────────┘  │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │              @atomic-editor packages                  │  │
+│  │      components · hooks · utils · icons               │  │
+│  │               (all Tailwind)                          │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │               @wordpress packages                     │  │
+│  │   block-editor · data · core-data · interactivity    │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │                  WordPress Core                       │  │
+│  │    REST API · Block Registration · theme.json · FSE  │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Performance Targets
+
+| Metric | Atomic Editor | Elementor | Divi |
+|---|---|---|---|
+| Total CSS bundle | < 20KB (Tailwind JIT) | 1MB+ | 1.5MB+ |
+| JS per page (static) | 0KB | 300–600KB | 400KB+ |
+| First Contentful Paint | < 1.5s | 3s+ | 4s+ |
+| Largest Contentful Paint | < 2.5s | 4s+ | 5s+ |
+| Cumulative Layout Shift | < 0.1 | 0.3+ | 0.4+ |
+| Lighthouse Performance | ≥ 90 | ~45 | ~35 |
+
+---
+
+## PHP Architecture
+
+### Entry point: `atomic-editor.php`
+
+```php
+define( 'ATOMIC_EDITOR_VERSION', $plugin_data['Version'] );
+define( 'ATOMIC_EDITOR_FILE',    __FILE__ );
+define( 'ATOMIC_EDITOR_DIR',     plugin_dir_path( __FILE__ ) );
+define( 'ATOMIC_EDITOR_URL',     plugin_dir_url( __FILE__ ) );
+
+function atomicEditor_init(): void {
+    require_once ATOMIC_EDITOR_DIR . 'includes/class-atomic-editor.php';
+    ( new Atomic_Editor() )->run();
+}
+add_action( 'plugins_loaded', 'atomicEditor_init' );
+```
+
+### `class-atomic-editor.php`
+
+Orchestrates all modules. Loads `build/build.php` (auto-generated by `@wordpress/build`) and enqueues the single compiled Tailwind stylesheet that covers every surface:
+
+```php
+require_once ATOMIC_EDITOR_DIR . 'build/build.php';
+
+wp_enqueue_style(
+    'atomic-editor',
+    ATOMIC_EDITOR_URL . 'build/atomic-editor.css',
+    [],
+    ATOMIC_EDITOR_VERSION
+);
+```
+
+### `class-blocks.php`
+
+Auto-discovers and registers all blocks — no manual registration per block:
+
+```php
+$block_dirs = glob( ATOMIC_EDITOR_DIR . 'src/blocks/*/*', GLOB_ONLYDIR );
+foreach ( $block_dirs as $dir ) {
+    if ( file_exists( $dir . '/block.json' ) ) {
+        register_block_type( $dir );
+    }
+}
+```
+
+### PHP admin templates
+
+All PHP-rendered HTML uses Tailwind utility classes directly. The same `build/atomic-editor.css` file covers these pages — no separate admin stylesheet:
+
+```php
+// templates/settings.php
+?>
+<div class="min-h-screen bg-ae-dark2 text-white font-sans">
+  <div class="max-w-4xl mx-auto px-8 py-12">
+    <h1 class="font-display text-2xl font-bold tracking-tight mb-1">
+      Atomic Editor
+    </h1>
+    <p class="text-ae-dim text-sm mb-8">Settings</p>
+    <div class="bg-ae-dark3 border border-ae-dark5 rounded-ae p-6">
+      <!-- settings fields with Tailwind -->
+    </div>
+  </div>
+</div>
+```
+
+---
+
+## Block Architecture
+
+Every block follows the same structure. No CSS files:
+
+```
+src/blocks/layout/section/
+├── block.json     # Metadata, attributes, supports
+├── index.ts       # Entry — registers the block
+├── edit.tsx       # Editor component — Tailwind classes
+└── save.tsx       # Save component — same Tailwind classes
+```
+
+### `block.json`
+
+```json
+{
+  "apiVersion": 3,
+  "name": "atomic-editor/section",
+  "title": "Section",
+  "category": "atomic-editor-layout",
+  "textdomain": "atomic-editor",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "spacing": { "padding": true, "margin": true },
+    "color": { "background": true, "text": true, "gradients": true }
+  },
+  "attributes": {
+    "padding":    { "type": "string", "default": "md" },
+    "background": { "type": "string", "default": "white" },
+    "align":      { "type": "string", "default": "left" },
+    "tagName":    { "type": "string", "default": "section" }
+  },
+  "editorScript": "file:./index.ts",
+  "viewScript":   "file:./view.ts"
+}
+```
+
+### `edit.tsx` and `save.tsx` — Tailwind everywhere
+
+Block attributes map directly to Tailwind classes via lookup maps. The `edit` and `save` components share identical class logic:
+
+```tsx
+import { cn, paddingMap, backgroundMap } from '@atomic-editor/utils';
+
+// Shared class logic — used in both edit.tsx and save.tsx
+const sectionClasses = ( attrs: SectionAttributes ) => cn(
+  'ae-section w-full',
+  paddingMap[ attrs.padding ]    ?? paddingMap.md,
+  backgroundMap[ attrs.background ] ?? backgroundMap.white,
+  attrs.align === 'center' && 'text-center',
+  attrs.align === 'right'  && 'text-right',
+);
+
+// edit.tsx
+export function Edit( { attributes, setAttributes }: BlockEditProps<SectionAttributes> ) {
+  const Tag = attributes.tagName as keyof JSX.IntrinsicElements;
+  return (
+    <Tag { ...useBlockProps({ className: sectionClasses( attributes ) }) }>
+      <InnerBlocks />
+    </Tag>
+  );
+}
+
+// save.tsx
+export function Save( { attributes }: BlockSaveProps<SectionAttributes> ) {
+  const Tag = attributes.tagName as keyof JSX.IntrinsicElements;
+  return (
+    <Tag { ...useBlockProps.save({ className: sectionClasses( attributes ) }) }>
+      <InnerBlocks.Content />
+    </Tag>
+  );
+}
+```
+
+---
+
+## Block Categories
+
+```php
+add_filter( 'block_categories_all', function( $categories ) {
+  return array_merge( [
+    [ 'slug' => 'atomic-editor-layout',      'title' => 'AE — Layout'      ],
+    [ 'slug' => 'atomic-editor-content',     'title' => 'AE — Content'     ],
+    [ 'slug' => 'atomic-editor-media',       'title' => 'AE — Media'       ],
+    [ 'slug' => 'atomic-editor-interactive', 'title' => 'AE — Interactive' ],
+  ], $categories );
+});
+```
+
+---
+
+## JavaScript Architecture
+
+### Editor packages (`@atomic-editor/*`)
+
+Built by `@wordpress/build`. Exposed as `window.atomicEditor.*`. All components are styled with Tailwind utility classes. No CSS files in any package.
+
+### Interactivity (frontend)
+
+Interactive blocks use `@wordpress/interactivity` — already a project dependency. Directives (`data-wp-on`, `data-wp-context`) in `save.tsx`. No React on the frontend, no jQuery, no third-party JS frameworks.
+
+---
+
+## Data Layer
+
+### Custom `@wordpress/data` store
+
+```ts
+import { createReduxStore, register } from '@wordpress/data';
+
+const STORE_NAME = 'atomic-editor/ui';
+
+register( createReduxStore( STORE_NAME, {
+  reducer,
+  actions,
+  selectors,
+}) );
+```
+
+### `@wordpress/core-data`
+
+All entity CRUD (pages, posts, templates, patterns) goes through `@wordpress/core-data` — the same store Gutenberg uses. No custom REST endpoints for content operations.
+
+---
+
+## Competitive Comparison
+
+| Feature | Atomic Editor | Elementor | Divi | Beaver Builder |
+|---|---|---|---|---|
+| CSS Bundle | < 20KB (JIT) | 1MB+ | 1.5MB+ | 800KB+ |
+| Loading Speed | ⚡ Fast | 🐌 Slow | 🐌 Very slow | 🐌 Slow |
+| Code Quality | ✅ Tailwind only | ❌ Inline styles | ❌ Inline styles | ⚠️ Mixed |
+| Custom CSS in codebase | ✅ Zero | ❌ Extensive | ❌ Extensive | ⚠️ Mixed |
+| Mobile Performance | ✅ Excellent | ⚠️ Average | ❌ Poor | ⚠️ Average |
+| FSE Support | ✅ Full native | ⚠️ Partial | ❌ None | ❌ None |
+| Content portability | ✅ Full | ❌ Locked in | ❌ Locked in | ⚠️ Partial |
+| `theme.json` | ✅ Full | ❌ None | ❌ None | ❌ None |
+| Developer stack | ✅ Modern | ❌ Legacy | ❌ Proprietary | ⚠️ Limited |
+
+---
+
+## Roadmap
+
+### Phase 1 — Foundation (Weeks 1–8)
+- Plugin scaffold, PHP autoloader, block registration
+- Single Tailwind config, compiled CSS output
+- 12 core blocks (Layout + Content)
+- `@atomic-editor` package setup
+
+### Phase 2 — Builder UX (Weeks 9–20)
+- Visual drag-and-drop canvas
+- Pattern library (30+ sections)
+- Responsive preview
+- 12 marketing blocks
+- Agency mode / Block Locking
+
+### Phase 3 — Pro + Platform (Weeks 21–36)
+- Interactive blocks (`@wordpress/interactivity`)
+- Dynamic blocks (Query Loop+, Post Grid)
+- WooCommerce blocks
+- AI layout assistant
+- SDK + third-party block marketplace
+
+---
+
+## Requirements
+
+| | Minimum |
+|---|---|
+| WordPress | 6.7 |
+| PHP | 7.4 |
+| Node.js | 20.10.0 |
+| npm | 10.2.3 |

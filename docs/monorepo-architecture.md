@@ -1,336 +1,332 @@
-# 🏗️ Exoole Monorepo Architecture
+# Atomic Editor — Monorepo Architecture
 
 ## Overview
 
-Exoole is built as a **modern monorepo** that organizes Exoole blocks, components, utilities, and tools in a scalable, maintainable structure. This architecture enables code sharing, consistent development practices, and efficient build processes across the entire project.
+Atomic Editor is a modern monorepo. Every block, package, tool, and configuration lives in a single repository. This mirrors how the Gutenberg project itself is built — npm workspaces manage packages, `@wordpress/build` handles transpilation and PHP registration, and each package has a single clear purpose.
 
-## 📁 Monorepo Structure
+There are no CSS files anywhere in this project. Tailwind CSS is the only styling system, compiled from a single config at the repo root, covering every surface — blocks, editor UI, admin pages, and PHP templates.
+
+---
+
+## Repository Structure
 
 ```
-exoole/
-├── 📦 packages/                    # Core monorepo packages
-│   ├── components/                 # Reusable React components
-│   │   ├── src/
-│   │   │   ├── index.ts           # Package entry point
-│   │   │   ├── button.tsx         # Button component
-│   │   │   └── ...                # Other components
-│   │   ├── package.json           # Package dependencies
-│   │   └── tsconfig.json          # TypeScript config
-│   │
-│   ├── hooks/                      # Custom React hooks
-│   │   ├── src/
-│   │   │   ├── index.ts           # Hooks entry point
-│   │   │   ├── useBlockEditor.ts  # Exoole editor hooks
-│   │   │   └── ...                # Other hooks
-│   │   └── package.json
-│   │
-│   └── utils/                      # Shared utilities
-│   |   ├── src/
-│   |   │   ├── index.ts           # Utils entry point
-│   |   │   ├── formatters.ts      # Data formatting utilities
-│   |   │   └── ...                # Other utilities
-│   |   └── package.json
-│   └── ... 
+atomic-editor/
 │
-
+├── packages/                          # Monorepo packages (@atomic-editor/*)
+│   │
+│   ├── components/                    # Reusable React UI components
+│   │   ├── src/
+│   │   │   ├── index.ts              # Package entry point
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── modal.tsx
+│   │   │   ├── color-picker.tsx
+│   │   │   ├── spacing-control.tsx
+│   │   │   └── ...
+│   │   ├── package.json              # "wpScript": true
+│   │   ├── tsconfig.json
+│   │   └── README.md
+│   │
+│   ├── hooks/                         # Custom React hooks
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── useBlockEditor.ts
+│   │   │   ├── useBlockAttributes.ts
+│   │   │   ├── useMediaUpload.ts
+│   │   │   └── useResponsive.ts
+│   │   ├── package.json
+│   │   └── README.md
+│   │
+│   ├── utils/                         # Shared utilities
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── cn.ts                 # clsx + tailwind-merge
+│   │   │   ├── class-maps.ts         # Tailwind class lookup maps
+│   │   │   ├── responsive.ts
+│   │   │   └── formatters.ts
+│   │   ├── package.json
+│   │   └── README.md
+│   │
+│   └── icons/                         # SVG icon set
+│       ├── src/
+│       │   ├── index.ts
+│       │   └── ...
+│       ├── package.json
+│       └── README.md
+│
+├── src/
+│   │
+│   ├── blocks/                        # All Atomic Editor blocks
+│   │   │
+│   │   ├── layout/                    # Layout blocks
+│   │   │   ├── section/
+│   │   │   │   ├── block.json
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── edit.tsx           # Tailwind classes
+│   │   │   │   └── save.tsx           # Same Tailwind classes
+│   │   │   ├── container/
+│   │   │   ├── grid/
+│   │   │   ├── flexbox/
+│   │   │   ├── div/
+│   │   │   └── column/
+│   │   │
+│   │   ├── content/                   # Content blocks
+│   │   │   ├── heading/
+│   │   │   ├── paragraph/
+│   │   │   ├── rich-text/
+│   │   │   ├── list/
+│   │   │   ├── quote/
+│   │   │   └── ...
+│   │   │
+│   │   ├── media/                     # Media blocks
+│   │   │   ├── image/
+│   │   │   ├── video/
+│   │   │   ├── gallery/
+│   │   │   ├── slider/
+│   │   │   └── background-section/
+│   │   │
+│   │   └── interactive/               # Interactive blocks
+│   │       ├── button/
+│   │       ├── contact-form/
+│   │       ├── search-bar/
+│   │       ├── social-share/
+│   │       └── newsletter/
+│   │
+│   └── admin/                         # Editor shell React app
+│       ├── editor/
+│       ├── sidebar/
+│       └── settings/
+│
+├── routes/                            # File-based admin routing (@wordpress/build)
+│   └── editor/
+│       ├── package.json
+│       ├── stage.tsx
+│       ├── inspector.tsx
+│       └── canvas.tsx
+│
+├── includes/                          # PHP — PSR-4 autoloaded classes
+│   ├── class-atomic-editor.php
+│   ├── class-blocks.php
+│   └── class-assets.php
+│
+├── templates/                         # PHP admin templates (Tailwind classes)
+│   ├── settings.php
+│   └── onboarding.php
+│
+├── tools/
+│   └── scripts/
+│       └── create-block.js            # Block scaffolding CLI
+│
+├── tests/                             # PHP and JS tests
+├── docs/                              # Architecture documentation
+│
+├── atomic-editor.php                  # Plugin entry point
+├── tailwind.config.ts                 # Single config — covers all surfaces
+├── package.json                       # Root — wpPlugin config + workspaces
+├── tsconfig.base.json
+├── tsconfig.json
+├── composer.json
+├── .wp-env.json
+└── README.md
 ```
 
-## 🎯 Monorepo Benefits
+---
 
-### 1. **Code Reusability**
-```typescript
-// ✅ Import components across packages
-import { Button, Card } from '@exoole/components';
-import { useBlockEditor } from '@exoole/hooks';
-import { formatDate } from '@exoole/utils';
+## Package Principles
 
-// Use in any block or component
+These rules apply to every package under `packages/`. They follow the same guidelines Gutenberg uses internally.
+
+**1. Single, clear purpose.** It must be immediately obvious why the package exists. No utility catch-alls, no "misc" packages.
+
+**2. Every package has a README.** Defines scope, usage, and prerequisites.
+
+**3. Default to bundled.** No globals unless required. Set `"wpScript": true` only when the package needs to be a WordPress script global (`window.atomicEditor.*`).
+
+**4. Clean exports.** Each package exposes a single `src/index.ts` entry point. No deep imports into package internals.
+
+**5. No circular dependencies.** Dependency direction flows one way only: `blocks` → `packages/hooks` → `packages/utils`. Never the reverse.
+
+**6. No CSS files.** All styling is Tailwind utility classes in TSX. The root `tailwind.config.ts` scans all package source files automatically.
+
+---
+
+## Build System
+
+### `@wordpress/build` — packages
+
+Handles everything under `packages/` and `routes/`. Configured via `wpPlugin` in root `package.json`:
+
+```json
+{
+  "wpPlugin": {
+    "name": "atomicEditor",
+    "scriptGlobal": "atomicEditor",
+    "packageNamespace": "atomic-editor",
+    "handlePrefix": "atomic-editor"
+  }
+}
+```
+
+What this gives you:
+
+- `@atomic-editor/components` → `window.atomicEditor.components` with handle `atomic-editor-components`
+- `@atomic-editor/hooks` → `window.atomicEditor.hooks` with handle `atomic-editor-hooks`
+- Auto-generated `build/build.php` — one `require_once` registers all scripts and styles
+- TypeScript + JSX via esbuild (fast)
+- CJS (`build/`) and ESM (`build-module/`) output from the same source
+- All `@wordpress/*` packages externalized to `window.wp.*` — never bundled
+
+### `@wordpress/scripts` — blocks
+
+Handles `src/blocks/`. Per-block `block.json` drives registration. `.asset.php` generated per entry point with correct WP dependency handles and version hash.
+
+### Tailwind CSS compilation
+
+Tailwind runs as a PostCSS plugin in both pipelines. A single `build/atomic-editor.css` covers every surface. WordPress enqueues it once per page.
+
+```json
+{
+  "scripts": {
+    "start":        "wp-scripts start",
+    "build":        "wp-scripts build",
+    "build:css":    "tailwindcss -i ./src/global.css -o ./build/atomic-editor.css --minify",
+    "dev:css":      "tailwindcss -i ./src/global.css -o ./build/atomic-editor.css --watch",
+    "lint:js":      "wp-scripts lint-js",
+    "lint:css":     "wp-scripts lint-style",
+    "lint:php":     "composer run lint",
+    "test:unit":    "wp-scripts test-unit-js",
+    "test:php":     "composer run test",
+    "type-check":   "tsc --build",
+    "wp-env":       "wp-env",
+    "create-block": "node tools/scripts/create-block.js"
+  }
+}
+```
+
+---
+
+## Package System — Code Reusability
+
+```tsx
+// Import packages anywhere — blocks, admin, editor shell
+import { Button, Card, Modal }     from '@atomic-editor/components';
+import { useBlockEditor }           from '@atomic-editor/hooks';
+import { useBlockAttributes }       from '@atomic-editor/hooks';
+import { cn, paddingMap }           from '@atomic-editor/utils';
+import { SectionIcon }              from '@atomic-editor/icons';
+
+// Use in any block
 function HeroBlock() {
-  const { blockProps } = useBlockEditor();
-  
+  const { blockProps, attributes } = useBlockEditor();
+
   return (
-    <Card>
-      <Button onClick={() => console.log(formatDate(new Date()))}>
-        Click me
-      </Button>
+    <Card className={cn('w-full', paddingMap[attributes.padding])}>
+      <Button variant="primary">Get started</Button>
     </Card>
   );
 }
 ```
 
-### 2. **Consistent Dependencies**
-- **Single Source of Truth**: All packages share the same version of React, TypeScript, etc.
-- **Reduced Bundle Size**: No duplicate dependencies across packages
-- **Version Synchronization**: Updates happen across all packages simultaneously
+---
 
-### 3. **Unified Development Experience**
-- **Single Repository**: All code in one place for easy navigation
-- **Shared Tooling**: Same build tools, linting rules, and testing setup
-- **Cross-Package Development**: Easy to make changes that span multiple packages
+## Import Conventions
 
-## 🔧 Package System
+```ts
+// ✅ Always use package aliases
+import { Button }             from '@atomic-editor/components';
+import { useBlockAttributes } from '@atomic-editor/hooks';
+import { cn, paddingMap }     from '@atomic-editor/utils';
 
-### Auto-Discovery Architecture
+// ✅ WordPress packages — always externalized, never bundled
+import { useBlockProps }      from '@wordpress/block-editor';
+import { __ }                 from '@wordpress/i18n';
 
-Exoole uses intelligent auto-discovery to automatically configure packages:
+// ✅ Tailwind class maps — complete strings so JIT can scan
+const cls = paddingMap[attributes.padding]; // 'py-16 px-12'
 
-```javascript
-// tools/webpack-packages.js
-function getPackageEntries(rootDir = process.cwd()) {
-  const packagesDir = path.resolve(rootDir, "packages");
-  const entries = {};
-
-  // Automatically discover all packages
-  const packageDirs = fs.readdirSync(packagesDir, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
-
-  packageDirs.forEach((packageName) => {
-    const packageIndexPath = path.resolve(packagesDir, packageName, "src", "index.ts");
-    if (fs.existsSync(packageIndexPath)) {
-      entries[`${packageName}/index`] = packageIndexPath;
-    }
-  });
-
-  return entries;
-}
-```
-
-### Webpack Aliases
-
-Automatic alias generation for clean imports:
-
-```javascript
-function getPackageAliases(rootDir = process.cwd()) {
-  const aliases = {};
-  
-  packageDirs.forEach((packageName) => {
-    aliases[`@exoole/${packageName}`] = path.resolve(packagesDir, packageName, 'src');
-  });
-
-  return aliases;
-  // Results in:
-  // '@exoole/components' → 'packages/components/src'
-  // '@exoole/hooks' → 'packages/hooks/src'
-  // '@exoole/utils' → 'packages/utils/src'
-}
-```
-
-## 📦 Package Architecture
-
-### 1. **Components Package** (`@exoole/components`)
-
-**Purpose**: Reusable React components for Exoole blocks
-
-```typescript
-// packages/components/src/index.ts
-export { Button } from './button';
-export { Card } from './card';
-export { Modal } from './modal';
-export type { ButtonProps, CardProps, ModalProps } from './types';
-```
-
-**Structure**:
-```
-components/
-├── src/
-│   ├── index.ts              # Main export file
-│   ├── button.tsx           # Button component
-│   ├── card.tsx             # Card component
-│   ├── modal.tsx            # Modal component
-│   └── types.ts             # TypeScript definitions
-├── package.json
-└── tsconfig.json
-```
-
-### 2. **Hooks Package** (`@exoole/hooks`)
-
-**Purpose**: Custom React hooks for Exoole integration
-
-```typescript
-// packages/hooks/src/index.ts
-export { useBlockEditor } from './useBlockEditor';
-export { useMediaUpload } from './useMediaUpload';
-export { useBlockAttributes } from './useBlockAttributes';
-```
-
-**Examples**:
-```typescript
-// useBlockEditor.ts - Exoole editor integration
-export function useBlockEditor() {
-  const blockProps = useBlockProps();
-  const { attributes, setAttributes } = useBlockEditContext();
-  
-  return {
-    blockProps,
-    attributes,
-    setAttributes,
-    // ... other editor utilities
-  };
-}
-```
-
-## 🚀 Build System Architecture
-
-### Unified Build Process
-
-```json
-{
-  "scripts": {`
-    "build": "webpack --mode=production",
-    "dev": "webpack --mode=development --watch",
-    "build:packages": "npm run build --workspace=packages",
-	"type-check": "tsc --build"
-  }
-}
-```
-
-### Package Entry Points
-
-The build system automatically generates entries for each package:
-
-```javascript
-// Generated webpack entries:
-{
-  'components/index': './packages/components/src/index.ts',
-  'hooks/index': './packages/hooks/src/index.ts',
-  'utils/index': './packages/utils/src/index.ts'
-}
-```
-
-### Output Structure
-
-```
-build/
-├── components/
-│   └── index.js              # Built components package
-├── hooks/
-│   └── index.js              # Built hooks package
-└── utils/
-    └── index.js              # Built utils package
-```
-
-### Import Patterns
-
-```typescript
-// ✅ Recommended: Use package aliases
-import { Button } from '@exoole/components';
-import { useBlockEditor } from '@exoole/hooks';
-import { formatDate } from '@exoole/utils';
-
-// ❌ Avoid: Direct relative imports across packages
+// ❌ Never relative cross-package imports
 import { Button } from '../../../packages/components/src/button';
+
+// ❌ Never dynamic class string construction — JIT cannot scan
+const cls = `py-${value}`; // wrong
 ```
-
-## 🧪 Development Workflow
-
-### 1. **Adding a New Package**
-
-```bash
-# Create package structure
-npm run create-package new-package
-# Install dependencies
-npm i
-```
-
-### 2. **Package Development**
-
-```typescript
-// packages/new-package/src/index.ts
-export function newUtility() {
-  return 'Hello from new package!';
-}
-
-// Automatically available as:
-import { newUtility } from '@exoole/new-package';
-```
-
-### 3. **Building and Testing**
-
-```bash
-# Build all packages
-npm run build
-
-# Watch mode for development
-npm run dev
-
-# Type checking
-npm run type-check
-```
-
-## 📈 Scalability Features
-
-### 1. **Automatic Package Discovery**
-- New packages are automatically included in builds
-- No manual webpack configuration needed
-- Aliases are generated automatically
-
-### 2. **Tree Shaking Support**
-- ES modules for optimal bundle size
-- Unused code is automatically removed
-- Per-package optimization
-
-### 3. **TypeScript Integration**
-- Shared TypeScript configuration
-- Cross-package type checking
-- Automatic type generation
-
-## 🎯 Performance Benefits
-
-### Bundle Optimization
-
-| Feature | Benefit |
-|---------|---------|
-| **Shared Dependencies** | Reduced overall bundle size |
-| **Tree Shaking** | Only used code is included |
-| **Code Splitting** | Packages loaded on demand |
-| **Single Build Pipeline** | Faster build times |
-
-### Development Performance
-
-- **Hot Module Replacement**: Fast development feedback
-- **Incremental Builds**: Only changed packages rebuild
-- **Parallel Processing**: Multiple packages build simultaneously
-
-## 🔮 Future Roadmap
-
-### Planned Enhancements
-
-1. **Package Versioning**: Independent package versions
-2. **Automated Testing**: Cross-package integration tests
-3. **Documentation Generation**: Auto-generated API docs
-4. **Performance Monitoring**: Bundle size tracking
-5. **Plugin Ecosystem**: Third-party package support
-
-## 📋 Best Practices
-
-### 1. **Package Design**
-- Keep packages focused and cohesive
-- Minimize inter-package dependencies
-- Use clear, descriptive exports
-
-### 2. **Import Management**
-- Always use package aliases (`@exoole/package`)
-- Avoid deep imports into package internals
-- Keep imports at the top level
-
-### 3. **Code Organization**
-- Group related functionality in the same package
-- Use index files for clean exports
-- Maintain consistent file naming
-
-## 🎉 Conclusion
-
-Exoole's monorepo architecture provides a robust foundation for WordPress block development that:
-
-- 🚀 **Scales Efficiently**: Easy to add new packages and functionality
-- 🔄 **Promotes Reusability**: Shared components and utilities across blocks
-- ⚡ **Optimizes Performance**: Intelligent bundling and tree shaking
-- 🛠️ **Enhances Development**: Unified tooling and consistent practices
-- 📦 **Simplifies Management**: Single repository for all code
-
-This architecture ensures that Exoole can grow from a simple builder plugin to a comprehensive WordPress development framework while maintaining excellent performance and developer experience.
 
 ---
 
-*Built with ❤️ using modern monorepo practices*
+## Adding a New Package
+
+```bash
+# 1. Create the structure
+mkdir -p packages/my-package/src
+touch packages/my-package/src/index.ts
+touch packages/my-package/package.json
+touch packages/my-package/README.md
+
+# 2. Minimum package.json
+{
+  "name": "@atomic-editor/my-package",
+  "version": "0.1.0",
+  "main": "build/index.js",
+  "module": "build-module/index.js"
+}
+
+# 3. Install from root
+npm install
+```
+
+`@wordpress/build` auto-discovers the new package. The root `tailwind.config.ts` glob `packages/*/src/**/*.{ts,tsx}` already covers it. No webpack changes needed.
+
+---
+
+## Adding a New Block
+
+```bash
+npm run create-block -- --name hero --category content
+```
+
+Scaffolds `src/blocks/content/hero/` with:
+
+```
+hero/
+├── block.json   # Metadata and attributes
+├── index.ts     # Entry point — registers the block
+├── edit.tsx     # Editor component — Tailwind classes
+└── save.tsx     # Save component — same Tailwind classes
+```
+
+No CSS files are created. The block uses Tailwind utility classes directly in TSX.
+
+---
+
+## Dependency Graph
+
+```
+atomic-editor.php
+    └── includes/class-atomic-editor.php
+            ├── includes/class-blocks.php     → registers all src/blocks/**/block.json
+            └── includes/class-assets.php    → require_once build/build.php
+                                             → wp_enqueue_style('build/atomic-editor.css')
+
+packages/components  → @atomic-editor/utils, @atomic-editor/icons
+packages/hooks       → @atomic-editor/utils, @wordpress/data
+packages/utils       → clsx, tailwind-merge  (no internal deps)
+packages/icons       → (no deps)
+
+src/blocks/**        → @atomic-editor/components, @atomic-editor/hooks
+```
+
+No package depends on a block. Blocks are leaf consumers — they depend on packages, never the reverse.
+
+---
+
+## Performance Benefits
+
+| Feature | Benefit |
+|---|---|
+| Shared dependencies | No duplicate React, TypeScript, or Tailwind across packages |
+| Tailwind JIT | Only used classes compiled — total CSS under 20KB |
+| Tree shaking | Unused exports never bundled |
+| Single build pipeline | One `npm run build` compiles everything |
+| `@wordpress/build` auto-discovery | New packages included automatically |
+| Incremental builds | Only changed packages rebuild in watch mode |
